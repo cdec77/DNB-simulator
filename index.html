@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr" manifest="manifest.json">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4a90e2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Simulateur DNB 2026</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512x512.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>📊 Simulateur DNB 2026</h1>
+        <div class="copyright">© Cyrille de Chanteloup</div>
+    </div>
+
+    <div class="main-container">
+        <div class="left-column">
+            <div class="info-text">
+                <strong>40%</strong> : Moyenne des 11 matières + bonus Latin (si >10/20).<br>
+                <strong>60%</strong> : Moyenne des 5 épreuves finales.
+            </div>
+
+            <h2>📚 Matières obligatoires</h2>
+            <table>
+                <thead>
+                    <tr><th>Matière</th><th>T1</th><th>T2</th><th>T3</th><th>Moy.</th></tr>
+                </thead>
+                <tbody id="matières-body">
+                    <!-- Les lignes seront générées par JavaScript -->
+                </tbody>
+            </table>
+
+            <h2>🏛️ Option Latin</h2>
+            <table>
+                <thead>
+                    <tr><th>Latin</th><th>T1</th><th>T2</th><th>T3</th><th>Moy.</th><th>+Pts</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Latin</td>
+                        <td><input type="number" id="latin-t1" min="0" max="20" step="0.01" oninput="updateAll()" placeholder="0"></td>
+                        <td><input type="number" id="latin-t2" min="0" max="20" step="0.01" oninput="updateAll()" placeholder="0"></td>
+                        <td><input type="number" id="latin-t3" min="0" max="20" step="0.01" oninput="updateAll()" placeholder="0"></td>
+                        <td id="latin-moyenne">-</td>
+                        <td id="latin-points">-</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>📝 Épreuves finales (60%)</h2>
+            <table>
+                <thead>
+                    <tr><th>Épreuve</th><th>Note/20</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Français</td><td><input type="number" id="francais-final" min="0" max="20" step="0.01" oninput="updateAll()" placeholder="0"></td></tr>
+                    <tr><td>Mathématiques</td><td><input type="number" id="maths-final" min="0" max="20" step="0.01" oninput="updateAll()" placeholder="0"></td></tr>
+                    <tr><td>Histoire-Géo/EMC</td><td><input type="number" id="histoire-final" min="0" max="20" step="0.01" oninput="updateAll()" placeholder="0"></td></tr>
+                    <tr><td>Sciences</td><td><input type="number" id="sciences-final" min="0" max="20" step="0.01" oninput="updateAll()" placeholder="0"></td></tr>
+                    <tr><td>Oral</td><td><input type="number" id="oral-final" min="0" max="20" step="0.01" oninput="updateAll()" placeholder="0"></td></tr>
+                </tbody>
+            </table>
+            <div style="margin-top: 10px; font-size: 0.9em;">
+                <strong>Moyenne épreuves finales:</strong> <span id="moyenne-finales" style="color: #4a90e2; font-weight: bold;">-</span>/20
+            </div>
+        </div>
+
+        <div class="right-column">
+            <h2>📊 Résultats</h2>
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
