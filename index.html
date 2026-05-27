@@ -1,9 +1,16 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" manifest="manifest.json">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4a90e2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Simulateur DNB 2026</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512x512.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -372,17 +379,28 @@
         }
 
         /* Styles pour les mentions */
-        .mention-assez-bien { border-left-color: var(--success-color); }
-        .mention-bien { border-left-color: #3498db; }
+        .mention-dnb { border-left-color: var(--success-color); }
+        .mention-assez-bien { border-left-color: #3498db; }
+        .mention-bien { border-left-color: var(--warning-color); }
         .mention-tres-bien { border-left-color: #9b59b6; }
         .mention-felicitations { border-left-color: var(--gold-color); }
+
+        /* Animation pour les cartes de résultats */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-card {
+            animation: fadeIn 0.3s ease-out;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1><i class="fas fa-graduation-cap"></i> Simulateur DNB 2026</h1>
-            <div class="copyright">© Cyrille de Chanteloup</div>
+            <div class="copyright">© c dc</div>
         </div>
 
         <div class="tabs">
@@ -411,7 +429,7 @@
                     Seuls les points <strong>supérieurs à 10</strong> sont ajoutés (plafonnés à +10).
                 </div>
                 <div class="matiere-row">
-                    <div class="matiere-label">Latin</div>
+                    <div class="matiere-label"><i class="fas fa-language"></i> Latin</div>
                     <div class="trimestre-inputs">
                         <input type="number" id="latin-t1" min="0" max="20" step="0.01" placeholder="T1" oninput="updateAll()">
                         <input type="number" id="latin-t2" min="0" max="20" step="0.01" placeholder="T2" oninput="updateAll()">
@@ -466,10 +484,26 @@
         </div>
 
         <div class="footer">
-            <i class="fas fa-calculator"></i> Simulateur DNB 2026 - © Cyrille de Chanteloup
+            <i class="fas fa-calculator"></i> Simulateur DNB 2026 - © c dc
         </div>
     </div>
 
+    <!-- Enregistrement du Service Worker pour la PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+
+    <!-- Logique de l'application -->
     <script>
         // Liste des matières obligatoires avec icônes
         const matieresObligatoires = [
@@ -577,11 +611,11 @@
 
             // Seuils avec icônes et couleurs
             const seuils = [
-                { nom: "DNB", valeur: 10, emoji: "🎓", icon: "fa-graduation-cap", color: "#27ae60" },
-                { nom: "Assez bien", valeur: 12, emoji: "🌟", icon: "fa-star", color: "#3498db" },
-                { nom: "Bien", valeur: 14, emoji: "🌟🌟", icon: "fa-star-half-alt", color: "#f39c12" },
-                { nom: "Très bien", valeur: 16, emoji: "🌟🌟🌟", icon: "fa-award", color: "#9b59b6" },
-                { nom: "Félicitations", valeur: 18, emoji: "🏆", icon: "fa-trophy", color: "#ffd700" }
+                { nom: "DNB", valeur: 10, emoji: "🎓", icon: "fa-graduation-cap", color: "#27ae60", class: "mention-dnb" },
+                { nom: "Assez bien", valeur: 12, emoji: "🌟", icon: "fa-star", color: "#3498db", class: "mention-assez-bien" },
+                { nom: "Bien", valeur: 14, emoji: "🌟🌟", icon: "fa-star-half-alt", color: "#f39c12", class: "mention-bien" },
+                { nom: "Très bien", valeur: 16, emoji: "🌟🌟🌟", icon: "fa-award", color: "#9b59b6", class: "mention-tres-bien" },
+                { nom: "Félicitations", valeur: 18, emoji: "🏆", icon: "fa-trophy", color: "#ffd700", class: "mention-felicitations" }
             ];
 
             // Génération des résultats
@@ -623,7 +657,7 @@
 
             if (mention) {
                 resultHTML += `
-                    <div class="result-card mention-${mention.nom.toLowerCase().replace(/\s+/g, '-')}" style="border-left-color: ${mention.color};">
+                    <div class="result-card ${mention.class}" style="border-left-color: ${mention.color};">
                         <div class="result-icon"><i class="fas ${mention.icon}" style="color: ${mention.color};"></i></div>
                         <div class="result-content">
                             <div class="result-title">${mention.emoji} ${mention.nom}</div>
