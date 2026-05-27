@@ -6,12 +6,27 @@
     <meta name="theme-color" content="#4a90e2">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Simulateur DNB 2026">
+    <meta name="apple-mobile-web-app-title" content="Simulateur DNB 2026">
+    <meta name="description" content="Simulez vos notes pour le Diplôme National du Brevet 2026">
     <title>Simulateur DNB 2026</title>
+
+    <!-- Liens vers les icônes -->
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="icons/icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="icons/icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180x180.png">
     <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16x16.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512x512.png">
+
+    <!-- Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         :root {
             --primary-color: #4a90e2;
@@ -293,8 +308,9 @@
             color: var(--primary-color);
         }
 
-        /* Boutons */
-        button {
+        /* Bouton d'installation personnalisé */
+        .install-pwa {
+            display: none;
             background-color: var(--primary-color);
             color: white;
             border: none;
@@ -311,11 +327,11 @@
             justify-content: center;
         }
 
-        button i {
+        .install-pwa i {
             margin-right: 8px;
         }
 
-        button:active {
+        .install-pwa:active {
             background-color: #3a7bc8;
         }
 
@@ -400,8 +416,13 @@
     <div class="container">
         <div class="header">
             <h1><i class="fas fa-graduation-cap"></i> Simulateur DNB 2026</h1>
-            <div class="copyright">© Cyrille de Chanteloup</div>
+            <div class="copyright">© c dc</div>
         </div>
+
+        <!-- Bouton d'installation personnalisé -->
+        <button class="install-pwa" id="installButton" onclick="installPWA()">
+            <i class="fas fa-download"></i> Installer l'application
+        </button>
 
         <div class="tabs">
             <div class="tab active" onclick="switchTab('matières')"><i class="fas fa-book"></i> Matières</div>
@@ -484,12 +505,45 @@
         </div>
 
         <div class="footer">
-            <i class="fas fa-calculator"></i> Simulateur DNB 2026 - © Cyrille de Chanteloup
+            <i class="fas fa-calculator"></i> Simulateur DNB 2026 - © c dc
         </div>
     </div>
 
     <!-- Enregistrement du Service Worker pour la PWA -->
     <script>
+        // Variable pour stocker l'événement d'installation
+        let deferredPrompt;
+
+        // Écouter l'événement beforeinstallprompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Empêcher Chrome de montrer le prompt automatique
+            e.preventDefault();
+            // Stocker l'événement pour plus tard
+            deferredPrompt = e;
+            // Afficher le bouton d'installation
+            document.getElementById('installButton').style.display = 'block';
+        });
+
+        // Fonction pour installer la PWA
+        function installPWA() {
+            // Masquer le bouton
+            document.getElementById('installButton').style.display = 'none';
+
+            // Montrer le prompt d'installation
+            deferredPrompt.prompt();
+
+            // Attendre la réponse de l'utilisateur
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                deferredPrompt = null;
+            });
+        }
+
+        // Enregistrement du Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('service-worker.js')
