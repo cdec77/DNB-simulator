@@ -68,49 +68,65 @@
             letter-spacing: 1px;
         }
 
-        /* Barre de score globale fixe en haut de l'écran ou de la carte */
+        /* Cadre du haut avec 3 barres de score */
         .score-sticky-box {
-            background: linear-gradient(135deg, rgba(255, 44, 237, 0.2), rgba(10, 242, 255, 0.2));
+            background: linear-gradient(135deg, rgba(31, 40, 51, 0.8), rgba(42, 52, 57, 0.9));
             border: 2px solid var(--neon-blue);
             border-radius: 15px;
             padding: 15px;
-            text-align: center;
-            box-shadow: 0 0 15px rgba(10, 242, 255, 0.2);
+            box-shadow: 0 0 15px rgba(10, 242, 255, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .score-sticky-title {
+        .score-row {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .score-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-size: 0.85em;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--neon-blue);
-            margin-bottom: 5px;
+            letter-spacing: 0.5px;
         }
 
-        .score-sticky-value {
-            font-size: 2.2em;
-            font-weight: 900;
+        .score-label-cc { color: var(--neon-purple); }
+        .score-label-epreuves { color: var(--neon-pink); }
+        .score-label-generale { color: var(--neon-green); font-weight: bold; }
+
+        .score-number {
+            font-weight: 800;
+            font-size: 1.2em;
             color: #fff;
-            text-shadow: 0 0 10px var(--neon-pink);
         }
 
-        /* Progress Bar style Gaming */
+        .score-row.main-score .score-number {
+            font-size: 1.5em;
+            text-shadow: 0 0 8px var(--neon-green);
+        }
+
         .progress-container {
             background-color: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            height: 12px;
+            border-radius: 6px;
+            height: 8px;
             width: 100%;
-            margin-top: 10px;
             overflow: hidden;
-            position: relative;
         }
 
         .progress-bar {
-            background: linear-gradient(90deg, var(--neon-pink), var(--neon-green));
             height: 100%;
             width: 0%;
             transition: width 0.4s ease;
-            box-shadow: 0 0 8px var(--neon-green);
         }
+
+        .progress-bar.cc { background: var(--neon-purple); box-shadow: 0 0 6px var(--neon-purple); }
+        .progress-bar.epreuves { background: var(--neon-pink); box-shadow: 0 0 6px var(--neon-pink); }
+        .progress-bar.generale { background: var(--neon-green); box-shadow: 0 0 6px var(--neon-green); }
 
         .tabs {
             display: flex;
@@ -144,32 +160,14 @@
         }
 
         .tab-content.active {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .section-title {
-            font-size: 1em;
-            color: var(--neon-pink);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Liste cartes matières */
         .cards-list {
             display: flex;
             flex-direction: column;
             gap: 8px;
+            margin-top: 10px;
         }
 
         .item-card {
@@ -212,23 +210,11 @@
             color: white;
             outline: none;
             transition: all 0.2s;
-            -moz-appearance: textfield;
-        }
-
-        .inputs-group input::-webkit-outer-spin-button,
-        .inputs-group input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
         }
 
         .inputs-group input:focus {
             border-color: var(--neon-pink);
             box-shadow: 0 0 8px rgba(255, 44, 237, 0.4);
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .inputs-group input::placeholder {
-            color: rgba(255,255,255,0.25);
         }
 
         .card-moyenne {
@@ -239,20 +225,14 @@
             font-size: 0.95em;
         }
 
-        /* Épreuves Finales */
-        .epreuve-card {
-            border-left-color: var(--neon-blue);
-        }
-        .epreuve-card input {
-            width: 65px;
-        }
+        .epreuve-card { border-left-color: var(--neon-blue); }
+        .epreuve-card input { width: 65px; }
 
-        /* Badges de réussite (Gamification) */
         .mentions-grid {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            margin-top: 5px;
+            margin-top: 10px;
         }
 
         .mention-badge {
@@ -271,19 +251,12 @@
             opacity: 1;
             background: linear-gradient(90deg, rgba(0, 255, 157, 0.1), rgba(0, 0, 0, 0.2));
             border-color: var(--neon-green);
-            box-shadow: 0 0 10px rgba(0, 255, 157, 0.1);
         }
 
         .mention-badge.current {
             opacity: 1;
-            background: linear-gradient(90deg, rgba(10, 242, 255, 0.15), rgba(0, 0, 0, 0.2));
+            background: linear-gradient(90deg, rgba(10, 242, 255, 0.1), rgba(0, 0, 0, 0.2));
             border-color: var(--neon-blue);
-            animation: pulse 2s infinite alternate;
-        }
-
-        @keyframes pulse {
-            from { box-shadow: 0 0 5px rgba(10, 242, 255, 0.2); }
-            to { box-shadow: 0 0 15px rgba(10, 242, 255, 0.5); }
         }
 
         .mention-info {
@@ -292,23 +265,12 @@
             gap: 10px;
         }
 
-        .mention-emoji {
-            font-size: 1.3em;
-        }
-
-        .mention-name {
-            font-weight: 700;
-            font-size: 0.95em;
-        }
-
-        .mention-status {
-            font-size: 0.85em;
-            font-weight: bold;
-        }
+        .mention-emoji { font-size: 1.3em; }
+        .mention-name { font-weight: 700; font-size: 0.95em; }
+        .mention-status { font-size: 0.85em; font-weight: bold; }
 
         .status-locked { color: #ff4757; }
         .status-unlocked { color: var(--neon-green); }
-        .status-current { color: var(--neon-blue); text-transform: uppercase; }
 
         .info-bubble {
             background-color: rgba(249, 240, 2, 0.1);
@@ -318,13 +280,28 @@
             border-radius: 10px;
             font-size: 0.85em;
             line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 1em;
+            color: var(--neon-pink);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 15px;
         }
 
         .footer {
             text-align: center;
-            color: rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.4);
             font-size: 0.75em;
-            margin-top: 10px;
+            margin-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 15px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; } to { opacity: 1; }
         }
     </style>
 </head>
@@ -333,47 +310,71 @@
         
         <div class="header-area">
             <h1>📊 Simulateur DNB 2026</h1>
-            <div class="copyright">© Cyrille de Chanteloup - Tous droits réservés</div>
+            <div class="copyright">© c dc - Tous droits réservés</div>
         </div>
 
-        <!-- STICKY SCORE GAMING -->
+        <!-- CADRE DES 3 MOYENNES AVEC BARRES -->
         <div class="score-sticky-box">
-            <div class="score-sticky-title">Moyenne Générale Estimée</div>
-            <div class="score-sticky-value" id="global-score">0.00<span style="font-size:0.5em; font-weight:500;">/20</span></div>
-            <div class="progress-container">
-                <div class="progress-bar" id="main-progress"></div>
+            <!-- Contrôle Continu -->
+            <div class="score-row">
+                <div class="score-header">
+                    <span class="score-label-cc">Contrôle Continu (40%)</span>
+                    <span class="score-number" id="cc-score">0.00/20</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar cc" id="cc-progress"></div>
+                </div>
+            </div>
+
+            <!-- Épreuves Finales -->
+            <div class="score-row">
+                <div class="score-header">
+                    <span class="score-label-epreuves">Épreuves Finales (60%)</span>
+                    <span class="score-number" id="epreuves-score">0.00/20</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar epreuves" id="epreuves-progress"></div>
+                </div>
+            </div>
+
+            <!-- Moyenne Générale -->
+            <div class="score-row main-score" style="margin-top: 4px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;">
+                <div class="score-header">
+                    <span class="score-label-generale">Moyenne Générale DNB</span>
+                    <span class="score-number" id="global-score">0.00/20</span>
+                </div>
+                <div class="progress-container" style="height: 10px;">
+                    <div class="progress-bar generale" id="main-progress"></div>
+                </div>
             </div>
         </div>
 
         <!-- TABS NAV -->
         <div class="tabs">
             <div class="tab active" onclick="switchTab(event, 'tab-matieres')">📚 Contrôle Continu</div>
-            <div class="tab" onclick="switchTab(event, 'tab-epreuves')">📝 Épreuves & Badges</div>
+            <div class="tab" onclick="switchTab(event, 'tab-epreuves')">📝 Épreuves & Mentions</div>
         </div>
 
-        <!-- ONGLET CONTROLE CONTINU -->
+        <!-- CONTENU MATIERES -->
         <div id="tab-matieres" class="tab-content active">
-            <div class="info-bubble">
-                ⚡ <strong>Calcul (40%) :</strong> Moyenne des 12 matières obligatoires + bonus Option Latin (uniquement les points au-dessus de 10).
-            </div>
-            
             <div class="cards-list" id="matières-list"></div>
 
-            <div class="section-title" style="margin-top: 10px;">🏛️ Option Bonus</div>
-            <div class="item-card" style="border-left-color: var(--neon-yellow);">
-                <div class="item-label">Latin</div>
-                <div class="inputs-group">
-                    <input type="number" id="latin-t1" min="0" max="20" step="0.1" placeholder="T1" oninput="updateAll()">
-                    <input type="number" id="latin-t2" min="0" max="20" step="0.1" placeholder="T2" oninput="updateAll()">
-                    <input type="number" id="latin-t3" min="0" max="20" step="0.1" placeholder="T3" oninput="updateAll()">
+            <div class="section-title">🏛️ Option Bonus</div>
+            <div class="cards-list">
+                <div class="item-card" style="border-left-color: var(--neon-yellow);">
+                    <div class="item-label">Latin</div>
+                    <div class="inputs-group">
+                        <input type="number" id="latin-t1" min="0" max="20" step="0.1" placeholder="T1" oninput="updateAll()">
+                        <input type="number" id="latin-t2" min="0" max="20" step="0.1" placeholder="T2" oninput="updateAll()">
+                        <input type="number" id="latin-t3" min="0" max="20" step="0.1" placeholder="T3" oninput="updateAll()">
+                    </div>
+                    <div class="card-moyenne" id="latin-moyenne">-</div>
                 </div>
-                <div class="card-moyenne" id="latin-moyenne">-</div>
             </div>
         </div>
 
-        <!-- ONGLET EPREUVES ET RESULTATS -->
+        <!-- CONTENU EPREUVES -->
         <div id="tab-epreuves" class="tab-content">
-            <div class="section-title">📝 Épreuves Finales (60%)</div>
             <div class="cards-list">
                 <div class="item-card epreuve-card">
                     <div class="item-label">Français</div>
@@ -397,11 +398,14 @@
                 </div>
             </div>
 
-            <div class="section-title" style="margin-top: 10px;">🏆 Objectifs & Mentions</div>
+            <div class="section-title">🏆 Seuils des Mentions</div>
             <div class="mentions-grid" id="mentions-zone"></div>
         </div>
 
-        <div class="footer">✨ Application Collège 2026 ✨</div>
+        <!-- COPYRIGHT EN BAS -->
+        <div class="footer">
+            <p>© c dc - Simulateur DNB 2026 - Tous droits réservés</p>
+        </div>
     </div>
 
     <script>
@@ -421,10 +425,10 @@
         ];
 
         const seuils = [
-            { id: 'dnb', nom: "Brevet", valeur: 10, emoji: "🎓" },
-            { id: 'ab', nom: "Assez Bien", valeur: 12, emoji: "🌟" },
-            { id: 'b', nom: "Bien", valeur: 14, emoji: "🔥" },
-            { id: 'tb', nom: "Très Bien", valeur: 16, emoji: "👑" },
+            { id: 'dnb', nom: "Admis", valeur: 10, emoji: "🎓" },
+            { id: 'ab', nom: "Mention Assez Bien", valeur: 12, emoji: "🌟" },
+            { id: 'b', nom: "Mention Bien", valeur: 14, emoji: "🔥" },
+            { id: 'tb', nom: "Mention Très Bien", valeur: 16, emoji: "👑" },
             { id: 'felic', nom: "Félicitations", valeur: 18, emoji: "🏆" }
         ];
 
@@ -448,11 +452,10 @@
             setupAutoTab();
         }
 
-        // UX : Passe automatiquement à l'input suivant dès qu'on tape une note valide sur téléphone
         function setupAutoTab() {
             const inputs = document.querySelectorAll('input[type="number"]');
             inputs.forEach((input, index) => {
-                input.addEventListener('input', (e) => {
+                input.addEventListener('input', () => {
                     if (input.value.length >= 2 && parseFloat(input.value) <= 20) {
                         if (inputs[index + 1]) inputs[index + 1].focus();
                     }
@@ -468,7 +471,7 @@
         }
 
         function calculerMoyenne(...notes) {
-            const notesValides = notes.filter(n => n !== null && n !== undefined && !isNaN(n) && n !== "" && n !== 0);
+            const notesValides = notes.filter(n => n !== null && n !== undefined && !isNaN(n) && n !== "");
             return notesValides.length > 0 ? notesValides.reduce((a, b) => a + parseFloat(b), 0) / notesValides.length : 0;
         }
 
@@ -496,10 +499,12 @@
             document.getElementById('latin-moyenne').textContent = moyenneLatin > 0 ? arrondir(moyenneLatin) : '-';
             const pointsLatin = moyenneLatin > 10 ? (moyenneLatin - 10) : 0;
 
-            // Contrôle Continu (40%)
-            const moyenneCC = Math.min((sommeMatières + pointsLatin) / 12, 20);
+            // 1. Contrôle Continu (40%)
+            const moyenneCC = Math.min((sommeMatières + pointsLatin) / 12, 20) || 0;
+            document.getElementById('cc-score').textContent = `${arrondir(moyenneCC).toFixed(2)}/20`;
+            document.getElementById('cc-progress').style.width = `${(moyenneCC / 20) * 100}%`;
 
-            // Épreuves finales (60%)
+            // 2. Épreuves finales (60%)
             const notesFinales = [
                 parseFloat(document.getElementById('francais-final').value) || 0,
                 parseFloat(document.getElementById('maths-final').value) || 0,
@@ -507,48 +512,34 @@
                 parseFloat(document.getElementById('sciences-final').value) || 0,
                 parseFloat(document.getElementById('oral-final').value) || 0
             ];
-            const moyenneFinales = calculerMoyenne(...notesFinales);
+            const moyenneFinales = calculerMoyenne(...notesFinales) || 0;
+            document.getElementById('epreuves-score').textContent = `${arrondir(moyenneFinales).toFixed(2)}/20`;
+            document.getElementById('epreuves-progress').style.width = `${(moyenneFinales / 20) * 100}%`;
 
-            // Note finale Globale
-            const moyenneFinale = (moyenneCC * 0.4) + (moyenneFinales * 0.6);
-            
-            // Update du Score Affiché et de la barre gaming
-            const displayScore = arrondir(moyenneFinale) || 0;
-            document.getElementById('global-score').innerHTML = `${displayScore.toFixed(2)}<span style="font-size:0.5em; font-weight:500;">/20</span>`;
-            
-            // Calcul pourcentage de la barre (ex: note de 20 = 100%)
-            const progressPercent = Math.min((displayScore / 20) * 100, 100);
-            document.getElementById('main-progress').style.width = `${progressPercent}%`;
+            // 3. Note finale Globale
+            const moyenneFinale = (moyenneCC * 0.4) + (moyenneFinales * 0.6) || 0;
+            document.getElementById('global-score').textContent = `${arrondir(moyenneFinale).toFixed(2)}/20`;
+            document.getElementById('main-progress').style.width = `${(moyenneFinale / 20) * 100}%`;
 
-            // Rendu de la Gamification des Mentions
-            renderMentions(displayScore);
+            renderMentions(moyenneFinale);
         }
 
         function renderMentions(scoreActuel) {
             const zone = document.getElementById('mentions-zone');
             zone.innerHTML = '';
 
-            let highestUnlockedIdx = -1;
-            for (let i = 0; i < seuils.length; i++) {
-                if (scoreActuel >= seuils[i].valeur) {
-                    highestUnlockedIdx = i;
-                }
-            }
-
-            seuils.forEach((seuil, idx) => {
+            seuils.forEach((seuil) => {
                 const badge = document.createElement('div');
                 badge.className = 'mention-badge';
                 
                 let statusText = '';
-                if (idx <= highestUnlockedIdx) {
+                if (scoreActuel >= seuil.valeur) {
                     badge.classList.add('unlocked');
-                    statusText = `<span class="status-unlocked">Débloqué !</span>`;
-                } else if (idx === highestUnlockedIdx + 1) {
-                    badge.classList.add('current');
-                    const manque = arrondir(seuil.valeur - scoreActuel);
-                    statusText = `<span class="status-current">J-1 Prochain palier (-${manque} pts)</span>`;
+                    statusText = `<span class="status-unlocked">Atteint</span>`;
                 } else {
-                    statusText = `<span class="status-locked">Bloqué (Seuil: ${seuil.valeur})</span>`;
+                    const manque = arrondir(seuil.valeur - scoreActuel);
+                    statusText = `<span class="status-locked">Faltan ${manque} pt(s)</span>`;
+                    statusText = `<span class="status-locked">Manque ${manque} pt(s)</span>`;
                 }
 
                 badge.innerHTML = `
