@@ -185,7 +185,7 @@
 
         .item-grid {
             display: grid;
-            grid-template-columns: 1fr 140px 40px;
+            grid-template-columns: 1fr 140px 55px;
             align-items: center;
             background-color: var(--card-bg);
             padding: 6px 10px;
@@ -231,6 +231,16 @@
             font-weight: 800;
             color: var(--neon-green);
             font-size: 0.85em;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .bonus-lbl {
+            font-size: 0.75em;
+            color: var(--neon-yellow);
+            font-weight: bold;
+            margin-top: 2px;
         }
 
         .epreuve-grid {
@@ -313,7 +323,7 @@
         
         <div class="header-area">
             <h1>📊 Simulateur DNB 2026</h1>
-            <div class="copyright">© Cyrille de Chanteloup - Tous droits réservés</div>
+            <div class="copyright">© c dc - Tous droits réservés</div>
             <button class="install-btn" id="pwa-install-btn">📲 Installer l'application</button>
         </div>
 
@@ -357,22 +367,25 @@
             <div class="item-grid" style="border-left-color: var(--neon-yellow);">
                 <div class="item-label">Latin</div>
                 <div class="inputs-group">
-                    <input type="number" id="latin-t1" step="any" min="0" max="20" placeholder="T1" oninput="updateAll()">
-                    <input type="number" id="latin-t2" step="any" min="0" max="20" placeholder="T2" oninput="updateAll()">
-                    <input type="number" id="latin-t3" step="any" min="0" max="20" placeholder="T3" oninput="updateAll()">
+                    <input type="number" id="latin-t1" step="any" min="0" max="20" placeholder="T1" oninput="validateInput(this); updateAll()">
+                    <input type="number" id="latin-t2" step="any" min="0" max="20" placeholder="T2" oninput="validateInput(this); updateAll()">
+                    <input type="number" id="latin-t3" step="any" min="0" max="20" placeholder="T3" oninput="validateInput(this); updateAll()">
                 </div>
-                <div class="card-moyenne" id="latin-moyenne">-</div>
+                <div class="card-moyenne">
+                    <span id="latin-moyenne">-</span>
+                    <span id="latin-bonus" class="bonus-lbl"></span>
+                </div>
             </div>
         </div>
 
         <!-- ONGLET EPREUVES -->
         <div id="tab-epreuves" class="tab-content">
             <div class="cards-list">
-                <div class="item-grid epreuve-grid"><div class="item-label">Français</div><div class="inputs-group"><input type="number" id="francais-final" step="any" min="0" max="20" placeholder="Note/20" oninput="updateAll()"></div></div>
-                <div class="item-grid epreuve-grid"><div class="item-label">Mathématiques</div><div class="inputs-group"><input type="number" id="maths-final" step="any" min="0" max="20" placeholder="Note/20" oninput="updateAll()"></div></div>
-                <div class="item-grid epreuve-grid"><div class="item-label">Histoire-Géo</div><div class="inputs-group"><input type="number" id="histoire-final" step="any" min="0" max="20" placeholder="Note/20" oninput="updateAll()"></div></div>
-                <div class="item-grid epreuve-grid"><div class="item-label">Sciences</div><div class="inputs-group"><input type="number" id="sciences-final" step="any" min="0" max="20" placeholder="Note/20" oninput="updateAll()"></div></div>
-                <div class="item-grid epreuve-grid"><div class="item-label">Oral de Projet</div><div class="inputs-group"><input type="number" id="oral-final" step="any" min="0" max="20" placeholder="Note/20" oninput="updateAll()"></div></div>
+                <div class="item-grid epreuve-grid"><div class="item-label">Français</div><div class="inputs-group"><input type="number" id="francais-final" step="any" min="0" max="20" placeholder="Note/20" oninput="validateInput(this); updateAll()"></div></div>
+                <div class="item-grid epreuve-grid"><div class="item-label">Mathématiques</div><div class="inputs-group"><input type="number" id="maths-final" step="any" min="0" max="20" placeholder="Note/20" oninput="validateInput(this); updateAll()"></div></div>
+                <div class="item-grid epreuve-grid"><div class="item-label">Histoire-Géo</div><div class="inputs-group"><input type="number" id="histoire-final" step="any" min="0" max="20" placeholder="Note/20" oninput="validateInput(this); updateAll()"></div></div>
+                <div class="item-grid epreuve-grid"><div class="item-label">Sciences</div><div class="inputs-group"><input type="number" id="sciences-final" step="any" min="0" max="20" placeholder="Note/20" oninput="validateInput(this); updateAll()"></div></div>
+                <div class="item-grid epreuve-grid"><div class="item-label">Oral de Projet</div><div class="inputs-group"><input type="number" id="oral-final" step="any" min="0" max="20" placeholder="Note/20" oninput="validateInput(this); updateAll()"></div></div>
             </div>
 
             <div class="section-title">🏆 Points requis pour les Mentions</div>
@@ -380,7 +393,7 @@
         </div>
 
         <div class="footer">
-            <p>© Cyrille de Chanteloup - Simulateur DNB 2026 - Tous droits réservés</p>
+            <p>© c dc - Simulateur DNB 2026 - Tous droits réservés</p>
         </div>
     </div>
 
@@ -434,6 +447,12 @@
             { id: 'felic', nom: "Félicitations", valeur: 18, emoji: "🏆" }
         ];
 
+        function validateInput(input) {
+            if (parseFloat(input.value) > 20) {
+                input.value = "20";
+            }
+        }
+
         function generateMatièresList() {
             const container = document.getElementById('matières-list');
             container.innerHTML = '';
@@ -443,9 +462,9 @@
                 card.innerHTML = `
                     <div class="item-label">${matiere.nom}</div>
                     <div class="inputs-group">
-                        <input type="number" id="${matiere.id}-t1" step="any" min="0" max="20" placeholder="T1" oninput="updateAll()">
-                        <input type="number" id="${matiere.id}-t2" step="any" min="0" max="20" placeholder="T2" oninput="updateAll()">
-                        <input type="number" id="${matiere.id}-t3" step="any" min="0" max="20" placeholder="T3" oninput="updateAll()">
+                        <input type="number" id="${matiere.id}-t1" step="any" min="0" max="20" placeholder="T1" oninput="validateInput(this); updateAll()">
+                        <input type="number" id="${matiere.id}-t2" step="any" min="0" max="20" placeholder="T2" oninput="validateInput(this); updateAll()">
+                        <input type="number" id="${matiere.id}-t3" step="any" min="0" max="20" placeholder="T3" oninput="validateInput(this); updateAll()">
                     </div>
                     <div class="card-moyenne" id="${matiere.id}-moyenne">-</div>
                 `;
@@ -454,7 +473,6 @@
             setupAutoTab();
         }
 
-        // Amélioré : ne change de case que si l'on appuie sur Entrée ou si la note tapée vaut 20
         function setupAutoTab() {
             const inputs = document.querySelectorAll('input[type="number"]');
             inputs.forEach((input, index) => {
@@ -479,9 +497,23 @@
             event.currentTarget.classList.add('active');
         }
 
-        function calculerMoyenne(...notes) {
-            const notesValides = notes.filter(n => n !== null && n !== undefined && n !== "" && !isNaN(n));
-            return notesValides.length > 0 ? notesValides.reduce((a, b) => a + parseFloat(b), 0) / notesValides.length : 0;
+        function calculerMoyenneMatiere(id) {
+            const t1 = document.getElementById(`${id}-t1`).value;
+            const t2 = document.getElementById(`${id}-t2`).value;
+            const t3 = document.getElementById(`${id}-t3`).value;
+            
+            let notes = [];
+            if (t1 !== "") notes.push(parseFloat(t1));
+            if (t2 !== "") notes.push(parseFloat(t2));
+            if (t3 !== "") notes.push(parseFloat(t3));
+
+            if (notes.length === 0) return null;
+            return notes.reduce((a, b) => a + b, 0) / notes.length;
+        }
+
+        function calculerMoyenneTableau(tableau) {
+            const valides = tableau.filter(n => n !== null && !isNaN(n));
+            return valides.length > 0 ? valides.reduce((a, b) => a + b, 0) / valides.length : 0;
         }
 
         function arrondir(valeur) {
@@ -490,46 +522,63 @@
 
         function updateAll() {
             let sommeMatières = 0;
+            let matieresComptees = 0;
             
             matieresObligatoires.forEach(matiere => {
-                const t1 = parseFloat(document.getElementById(`${matiere.id}-t1`).value) || 0;
-                const t2 = parseFloat(document.getElementById(`${matiere.id}-t2`).value) || 0;
-                const t3 = parseFloat(document.getElementById(`${matiere.id}-t3`).value) || 0;
-                const moyenne = calculerMoyenne(t1, t2, t3);
-                
-                const hasNotes = document.getElementById(`${matiere.id}-t1`).value || document.getElementById(`${matiere.id}-t2`).value || document.getElementById(`${matiere.id}-t3`).value;
-                document.getElementById(`${matiere.id}-moyenne`).textContent = hasNotes ? arrondir(moyenne).toFixed(2) : '-';
-                sommeMatières += moyenne;
+                const moyenne = calculerMoyenneMatiere(matiere.id);
+                if (moyenne !== null) {
+                    document.getElementById(`${matiere.id}-moyenne`).textContent = arrondir(moyenne).toFixed(2);
+                    sommeMatières += moyenne;
+                    matieresComptees++;
+                } else {
+                    document.getElementById(`${matiere.id}-moyenne`).textContent = '-';
+                }
             });
 
-            const latinT1 = parseFloat(document.getElementById('latin-t1').value) || 0;
-            const latinT2 = parseFloat(document.getElementById('latin-t2').value) || 0;
-            const latinT3 = parseFloat(document.getElementById('latin-t3').value) || 0;
-            const moyenneLatin = calculerMoyenne(latinT1, latinT2, latinT3);
-            
-            const hasLatin = document.getElementById('latin-t1').value || document.getElementById('latin-t2').value || document.getElementById('latin-t3').value;
-            document.getElementById('latin-moyenne').textContent = hasLatin ? arrondir(moyenneLatin).toFixed(2) : '-';
-            const pointsLatin = moyenneLatin > 10 ? (moyenneLatin - 10) : 0;
+            // Gestion de l'option Latin & affichage des points supplémentaires
+            const moyenneLatin = calculerMoyenneMatiere('latin');
+            const bonusElement = document.getElementById('latin-bonus');
+            let pointsLatin = 0;
 
-            const moyenneCC = Math.min((sommeMatières + pointsLatin) / 12, 20) || 0;
+            if (moyenneLatin !== null) {
+                document.getElementById('latin-moyenne').textContent = arrondir(moyenneLatin).toFixed(2);
+                if (moyenneLatin > 10) {
+                    pointsLatin = moyenneLatin - 10;
+                    bonusElement.textContent = `+${arrondir(pointsLatin).toFixed(2)} pt(s)`;
+                } else {
+                    bonusElement.textContent = `+0.00 pt`;
+                }
+            } else {
+                document.getElementById('latin-moyenne').textContent = '-';
+                bonusElement.textContent = '';
+            }
+
+            // 1. Contrôle Continu
+            const moyenneCC = matieresComptees > 0 ? Math.min((sommeMatières + pointsLatin) / matieresComptees, 20) : 0;
             document.getElementById('cc-score').textContent = `${arrondir(moyenneCC).toFixed(2)}/20`;
             document.getElementById('cc-progress').style.width = `${(moyenneCC / 20) * 100}%`;
 
-            const notesFinales = [
-                parseFloat(document.getElementById('francais-final').value) || 0,
-                parseFloat(document.getElementById('maths-final').value) || 0,
-                parseFloat(document.getElementById('histoire-final').value) || 0,
-                parseFloat(document.getElementById('sciences-final').value) || 0,
-                parseFloat(document.getElementById('oral-final').value) || 0
-            ];
-            
-            const hasFinales = document.getElementById('francais-final').value || document.getElementById('maths-final').value || document.getElementById('histoire-final').value || document.getElementById('sciences-final').value || document.getElementById('oral-final').value;
-            const moyenneFinales = hasFinales ? calculerMoyenne(...notesFinales) : 0;
-            
+            // 2. Épreuves finales
+            const f1 = document.getElementById('francais-final').value;
+            const f2 = document.getElementById('maths-final').value;
+            const f3 = document.getElementById('histoire-final').value;
+            const f4 = document.getElementById('sciences-final').value;
+            const f5 = document.getElementById('oral-final').value;
+
+            let notesFinales = [];
+            if (f1 !== "") notesFinales.push(parseFloat(f1));
+            if (f2 !== "") notesFinales.push(parseFloat(f2));
+            if (f3 !== "") notesFinales.push(parseFloat(f3));
+            if (f4 !== "") notesFinales.push(parseFloat(f4));
+            if (f5 !== "") notesFinales.push(parseFloat(f5));
+
+            const moyenneFinales = notesFinales.length > 0 ? calculerMoyenneTableau(notesFinales) : 0;
             document.getElementById('epreuves-score').textContent = `${arrondir(moyenneFinales).toFixed(2)}/20`;
             document.getElementById('epreuves-progress').style.width = `${(moyenneFinales / 20) * 100}%`;
 
-            const moyenneFinale = (moyenneCC * 0.4) + (moyenneFinales * 0.6) || 0;
+            // 3. Note finale globale (Pondération 40% CC / 60% Épreuves)
+            const moyenneFinale = notesFinales.length > 0 ? ((moyenneCC * 0.4) + (moyenneFinales * 0.6)) : moyenneCC;
+            
             document.getElementById('global-score').textContent = `${arrondir(moyenneFinale).toFixed(2)}/20`;
             document.getElementById('main-progress').style.width = `${(moyenneFinale / 20) * 100}%`;
 
