@@ -31,68 +31,81 @@
             background-color: var(--dark-bg);
             color: #ffffff;
             min-height: 100vh;
-            padding: 15px;
+            padding: 8px;
             display: flex;
             justify-content: center;
+            align-items: flex-start;
         }
 
         .container {
             width: 100%;
-            max-width: 480px;
+            max-width: 420px;
             background-color: var(--light-bg);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(10, 242, 255, 0.15);
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: 0 8px 24px rgba(10, 242, 255, 0.15);
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 10px;
         }
 
         .header-area {
             text-align: center;
-            margin-bottom: 5px;
+            position: relative;
         }
 
         h1 {
             color: #fff;
-            font-size: 1.8em;
+            font-size: 1.4em;
             font-weight: 800;
-            letter-spacing: -0.5px;
-            text-shadow: 0 0 10px var(--neon-blue);
+            text-shadow: 0 0 8px var(--neon-blue);
         }
 
         .copyright {
-            font-size: 0.75em;
-            color: rgba(255, 255, 255, 0.6);
-            margin-top: 4px;
-            letter-spacing: 1px;
+            font-size: 0.7em;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 2px;
         }
 
-        /* Cadre du haut avec 3 barres de score */
+        /* Bouton d'installation PWA */
+        .install-btn {
+            display: none;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            color: var(--dark-bg);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin: 6px auto 2px auto;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(10, 242, 255, 0.3);
+            animation: pulse 2s infinite alternate;
+        }
+
+        /* Cadre des 3 moyennes ultra compact */
         .score-sticky-box {
-            background: linear-gradient(135deg, rgba(31, 40, 51, 0.8), rgba(42, 52, 57, 0.9));
-            border: 2px solid var(--neon-blue);
-            border-radius: 15px;
-            padding: 15px;
-            box-shadow: 0 0 15px rgba(10, 242, 255, 0.15);
+            background: rgba(42, 52, 57, 0.6);
+            border: 1px solid var(--neon-blue);
+            border-radius: 12px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 6px;
         }
 
         .score-row {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 2px;
         }
 
         .score-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85em;
+            font-size: 0.8em;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .score-label-cc { color: var(--neon-purple); }
@@ -101,19 +114,18 @@
 
         .score-number {
             font-weight: 800;
-            font-size: 1.2em;
-            color: #fff;
+            font-size: 1.1em;
         }
 
         .score-row.main-score .score-number {
-            font-size: 1.5em;
-            text-shadow: 0 0 8px var(--neon-green);
+            font-size: 1.3em;
+            text-shadow: 0 0 6px var(--neon-green);
         }
 
         .progress-container {
             background-color: rgba(255,255,255,0.1);
-            border-radius: 6px;
-            height: 8px;
+            border-radius: 4px;
+            height: 6px;
             width: 100%;
             overflow: hidden;
         }
@@ -121,187 +133,184 @@
         .progress-bar {
             height: 100%;
             width: 0%;
-            transition: width 0.4s ease;
+            transition: width 0.3s ease;
         }
 
-        .progress-bar.cc { background: var(--neon-purple); box-shadow: 0 0 6px var(--neon-purple); }
-        .progress-bar.epreuves { background: var(--neon-pink); box-shadow: 0 0 6px var(--neon-pink); }
-        .progress-bar.generale { background: var(--neon-green); box-shadow: 0 0 6px var(--neon-green); }
+        .progress-bar.cc { background: var(--neon-purple); }
+        .progress-bar.epreuves { background: var(--neon-pink); }
+        .progress-bar.generale { background: var(--neon-green); }
 
+        /* Navigation Onglets */
         .tabs {
             display: flex;
             background-color: rgba(0, 0, 0, 0.2);
-            padding: 5px;
-            border-radius: 12px;
-            gap: 5px;
+            padding: 4px;
+            border-radius: 10px;
+            gap: 4px;
         }
 
         .tab {
             flex: 1;
             text-align: center;
-            padding: 12px 5px;
+            padding: 8px 2px;
             cursor: pointer;
-            border-radius: 9px;
+            border-radius: 7px;
             color: rgba(255,255,255,0.7);
-            font-size: 0.9em;
+            font-size: 0.85em;
             font-weight: bold;
-            transition: all 0.2s ease;
         }
 
         .tab.active {
             background-color: var(--neon-blue);
             color: var(--dark-bg);
-            box-shadow: 0 0 10px rgba(10, 242, 255, 0.4);
+            box-shadow: 0 0 8px rgba(10, 242, 255, 0.3);
         }
 
         .tab-content {
             display: none;
-            animation: fadeIn 0.3s ease;
+            max-height: 48vh;
+            overflow-y: auto;
+            padding-right: 2px;
         }
 
         .tab-content.active {
             display: block;
         }
 
+        /* Scrollbar mini pour les listes mobiles */
+        .tab-content::-webkit-scrollbar { width: 4px; }
+        .tab-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
         .cards-list {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            margin-top: 10px;
+            gap: 4px;
         }
 
-        .item-card {
-            display: flex;
+        /* Grille stricte pour un alignement parfait par colonne */
+        .item-grid {
+            display: grid;
+            grid-template-columns: 1fr 140px 40px;
             align-items: center;
-            justify-content: space-between;
             background-color: var(--card-bg);
-            padding: 10px 14px;
-            border-radius: 12px;
-            transition: transform 0.2s;
-            border-left: 4px solid var(--neon-purple);
-        }
-
-        .item-card:focus-within {
-            transform: scale(1.02);
-            border-left-color: var(--neon-pink);
+            padding: 6px 10px;
+            border-radius: 8px;
+            border-left: 3px solid var(--neon-purple);
+            gap: 4px;
         }
 
         .item-label {
             font-weight: 600;
-            font-size: 0.95em;
+            font-size: 0.85em;
             color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .inputs-group {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+        }
+
+        .inputs-group input {
+            width: 42px;
+            height: 30px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.85em;
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.25);
+            color: white;
+            outline: none;
+        }
+
+        .inputs-group input:focus {
+            border-color: var(--neon-pink);
+        }
+
+        .card-moyenne {
+            text-align: right;
+            font-weight: 800;
+            color: var(--neon-green);
+            font-size: 0.85em;
+        }
+
+        .epreuve-grid {
+            grid-template-columns: 1fr 70px;
+            border-left-color: var(--neon-blue);
+        }
+        
+        .epreuve-grid .inputs-group input {
+            width: 65px;
+        }
+
+        .section-title {
+            font-size: 0.8em;
+            color: var(--neon-pink);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 8px 0 4px 0;
+        }
+
+        /* Affichage Points Manquants Progressif Optimisé */
+        .mentions-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .mention-row-ui {
+            background-color: rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 6px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .mention-row-ui.unlocked {
+            border-color: rgba(0, 255, 157, 0.4);
+            background-color: rgba(0, 255, 157, 0.05);
+        }
+
+        .mention-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85em;
+        }
+
+        .mention-title-lbl {
+            font-weight: 700;
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        .inputs-group input {
-            width: 45px;
-            height: 38px;
-            border: 2px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            text-align: center;
+        .mention-diff-lbl {
             font-size: 0.95em;
             font-weight: bold;
-            background-color: rgba(0, 0, 0, 0.25);
-            color: white;
-            outline: none;
-            transition: all 0.2s;
         }
 
-        .inputs-group input:focus {
-            border-color: var(--neon-pink);
-            box-shadow: 0 0 8px rgba(255, 44, 237, 0.4);
-        }
-
-        .card-moyenne {
-            min-width: 45px;
-            text-align: right;
-            font-weight: 800;
-            color: var(--neon-green);
-            font-size: 0.95em;
-        }
-
-        .epreuve-card { border-left-color: var(--neon-blue); }
-        .epreuve-card input { width: 65px; }
-
-        .mentions-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .mention-badge {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 15px;
-            border-radius: 12px;
-            background-color: rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.05);
-            opacity: 0.4;
-            transition: all 0.3s ease;
-        }
-
-        .mention-badge.unlocked {
-            opacity: 1;
-            background: linear-gradient(90deg, rgba(0, 255, 157, 0.1), rgba(0, 0, 0, 0.2));
-            border-color: var(--neon-green);
-        }
-
-        .mention-badge.current {
-            opacity: 1;
-            background: linear-gradient(90deg, rgba(10, 242, 255, 0.1), rgba(0, 0, 0, 0.2));
-            border-color: var(--neon-blue);
-        }
-
-        .mention-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .mention-emoji { font-size: 1.3em; }
-        .mention-name { font-weight: 700; font-size: 0.95em; }
-        .mention-status { font-size: 0.85em; font-weight: bold; }
-
-        .status-locked { color: #ff4757; }
-        .status-unlocked { color: var(--neon-green); }
-
-        .info-bubble {
-            background-color: rgba(249, 240, 2, 0.1);
-            border: 1px solid var(--neon-yellow);
-            color: #fff;
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 0.85em;
-            line-height: 1.4;
-            margin-bottom: 10px;
-        }
-
-        .section-title {
-            font-size: 1em;
-            color: var(--neon-pink);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 15px;
-        }
+        .diff-locked { color: #ff4757; }
+        .diff-unlocked { color: var(--neon-green); }
 
         .footer {
             text-align: center;
-            color: rgba(255,255,255,0.4);
-            font-size: 0.75em;
-            margin-top: 15px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 15px;
+            color: rgba(255,255,255,0.3);
+            font-size: 0.7em;
+            margin-top: 4px;
+            padding-top: 6px;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; } to { opacity: 1; }
+        @keyframes pulse {
+            from { box-shadow: 0 0 4px rgba(10, 242, 255, 0.2); }
+            to { box-shadow: 0 0 12px rgba(10, 242, 255, 0.6); }
         }
     </style>
 </head>
@@ -310,118 +319,123 @@
         
         <div class="header-area">
             <h1>📊 Simulateur DNB 2026</h1>
-            <div class="copyright">© Cyrille de Chanteloup - Tous droits réservés</div>
+            <div class="copyright">© c dc - Tous droits réservés</div>
+            <button class="install-btn" id="pwa-install-btn">📲 Installer l'application</button>
         </div>
 
-        <!-- CADRE DES 3 MOYENNES AVEC BARRES -->
+        <!-- 3 MOYENNES STICKY -->
         <div class="score-sticky-box">
-            <!-- Contrôle Continu -->
             <div class="score-row">
                 <div class="score-header">
                     <span class="score-label-cc">Contrôle Continu (40%)</span>
                     <span class="score-number" id="cc-score">0.00/20</span>
                 </div>
-                <div class="progress-container">
-                    <div class="progress-bar cc" id="cc-progress"></div>
-                </div>
+                <div class="progress-container"><div class="progress-bar cc" id="cc-progress"></div></div>
             </div>
 
-            <!-- Épreuves Finales -->
             <div class="score-row">
                 <div class="score-header">
                     <span class="score-label-epreuves">Épreuves Finales (60%)</span>
                     <span class="score-number" id="epreuves-score">0.00/20</span>
                 </div>
-                <div class="progress-container">
-                    <div class="progress-bar epreuves" id="epreuves-progress"></div>
-                </div>
+                <div class="progress-container"><div class="progress-bar epreuves" id="epreuves-progress"></div></div>
             </div>
 
-            <!-- Moyenne Générale -->
-            <div class="score-row main-score" style="margin-top: 4px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;">
+            <div class="score-row main-score" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 4px;">
                 <div class="score-header">
-                    <span class="score-label-generale">Moyenne Générale DNB</span>
+                    <span class="score-label-generale">Moyenne Générale</span>
                     <span class="score-number" id="global-score">0.00/20</span>
                 </div>
-                <div class="progress-container" style="height: 10px;">
-                    <div class="progress-bar generale" id="main-progress"></div>
-                </div>
+                <div class="progress-container" style="height: 8px;"><div class="progress-bar generale" id="main-progress"></div></div>
             </div>
         </div>
 
-        <!-- TABS NAV -->
+        <!-- ONGLETS -->
         <div class="tabs">
             <div class="tab active" onclick="switchTab(event, 'tab-matieres')">📚 Contrôle Continu</div>
             <div class="tab" onclick="switchTab(event, 'tab-epreuves')">📝 Épreuves & Mentions</div>
         </div>
 
-        <!-- CONTENU MATIERES -->
+        <!-- ONGLET CC -->
         <div id="tab-matieres" class="tab-content active">
             <div class="cards-list" id="matières-list"></div>
-
             <div class="section-title">🏛️ Option Bonus</div>
-            <div class="cards-list">
-                <div class="item-card" style="border-left-color: var(--neon-yellow);">
-                    <div class="item-label">Latin</div>
-                    <div class="inputs-group">
-                        <input type="number" id="latin-t1" min="0" max="20" step="0.1" placeholder="T1" oninput="updateAll()">
-                        <input type="number" id="latin-t2" min="0" max="20" step="0.1" placeholder="T2" oninput="updateAll()">
-                        <input type="number" id="latin-t3" min="0" max="20" step="0.1" placeholder="T3" oninput="updateAll()">
-                    </div>
-                    <div class="card-moyenne" id="latin-moyenne">-</div>
+            <div class="item-grid" style="border-left-color: var(--neon-yellow);">
+                <div class="item-label">Latin</div>
+                <div class="inputs-group">
+                    <input type="number" id="latin-t1" min="0" max="20" step="0.1" placeholder="T1" oninput="updateAll()">
+                    <input type="number" id="latin-t2" min="0" max="20" step="0.1" placeholder="T2" oninput="updateAll()">
+                    <input type="number" id="latin-t3" min="0" max="20" step="0.1" placeholder="T3" oninput="updateAll()">
                 </div>
+                <div class="card-moyenne" id="latin-moyenne">-</div>
             </div>
         </div>
 
-        <!-- CONTENU EPREUVES -->
+        <!-- ONGLET EPREUVES / MENTIONS -->
         <div id="tab-epreuves" class="tab-content">
             <div class="cards-list">
-                <div class="item-card epreuve-card">
-                    <div class="item-label">Français</div>
-                    <div class="inputs-group"><input type="number" class="epreuve-input" id="francais-final" min="0" max="20" step="0.1" placeholder="Note/20" oninput="updateAll()"></div>
-                </div>
-                <div class="item-card epreuve-card">
-                    <div class="item-label">Mathématiques</div>
-                    <div class="inputs-group"><input type="number" class="epreuve-input" id="maths-final" min="0" max="20" step="0.1" placeholder="Note/20" oninput="updateAll()"></div>
-                </div>
-                <div class="item-card epreuve-card">
-                    <div class="item-label">Histoire-Géo</div>
-                    <div class="inputs-group"><input type="number" class="epreuve-input" id="histoire-final" min="0" max="20" step="0.1" placeholder="Note/20" oninput="updateAll()"></div>
-                </div>
-                <div class="item-card epreuve-card">
-                    <div class="item-label">Sciences</div>
-                    <div class="inputs-group"><input type="number" class="epreuve-input" id="sciences-final" min="0" max="20" step="0.1" placeholder="Note/20" oninput="updateAll()"></div>
-                </div>
-                <div class="item-card epreuve-card">
-                    <div class="item-label">Oral de Projet</div>
-                    <div class="inputs-group"><input type="number" class="epreuve-input" id="oral-final" min="0" max="20" step="0.1" placeholder="Note/20" oninput="updateAll()"></div>
-                </div>
+                <div class="item-grid epreuve-grid"><div class="item-label">Français</div><div class="inputs-group"><input type="number" id="francais-final" placeholder="Note/20" oninput="updateAll()"></div></div>
+                <div class="item-grid epreuve-grid"><div class="item-label">Mathématiques</div><div class="inputs-group"><input type="number" id="maths-final" placeholder="Note/20" oninput="updateAll()"></div></div>
+                <div class="item-grid epreuve-grid"><div class="item-label">Histoire-Géo</div><div class="inputs-group"><input type="number" id="histoire-final" placeholder="Note/20" oninput="updateAll()"></div></div>
+                <div class="item-grid epreuve-grid"><div class="item-label">Sciences</div><div class="inputs-group"><input type="number" id="sciences-final" placeholder="Note/20" oninput="updateAll()"></div></div>
+                <div class="item-grid epreuve-grid"><div class="item-label">Oral de Projet</div><div class="inputs-group"><input type="number" id="oral-final" placeholder="Note/20" oninput="updateAll()"></div></div>
             </div>
 
-            <div class="section-title">🏆 Seuils des Mentions</div>
+            <div class="section-title">🏆 Points requis pour les Mentions</div>
             <div class="mentions-grid" id="mentions-zone"></div>
         </div>
 
-        <!-- COPYRIGHT EN BAS -->
         <div class="footer">
-            <p>© Cyrille de Chanteloup - Simulateur DNB 2026 - Tous droits réservés</p>
+            <p>© c dc - Simulateur DNB 2026 - Tous droits réservés</p>
         </div>
     </div>
 
     <script>
+        let deferredPrompt;
+        const installBtn = document.getElementById('pwa-install-btn');
+
+        // Détection de l'environnement iOS / Safari
+        const isIos = () => {
+            return /iPhone|iPad|iPod/i.test(navigator.userAgent) && !window.MSStream;
+        };
+        const isSafari = () => {
+            return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        };
+
+        // Gestion de l'installation Chrome/Android & Safari
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'block';
+        });
+
+        if (isIos() && isSafari() && !window.navigator.standalone) {
+            installBtn.style.display = 'block';
+            installBtn.textContent = "📲 Installer via Safari";
+        }
+
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') installBtn.style.display = 'none';
+                deferredPrompt = null;
+            } else if (isIos()) {
+                alert("Pour installer l'application sur votre iPhone :\n1. Appuyez sur le bouton de partage (flèche vers le haut en bas de l'écran).\n2. Faites défiler et choisissez 'Sur l'écran d'accueil'.");
+            }
+        });
+
+        window.addEventListener('appinstalled', () => {
+            installBtn.style.display = 'none';
+        });
+
         const matieresObligatoires = [
-            { id: 'francais', nom: 'Français' },
-            { id: 'maths', nom: 'Maths' },
-            { id: 'histoire-geo', nom: 'Histoire-Géo' },
-            { id: 'emc', nom: 'EMC' },
-            { id: 'physique-chimie', nom: 'Phys-Chimie' },
-            { id: 'svt', nom: 'SVT' },
-            { id: 'technologie', nom: 'Techno' },
-            { id: 'lv1', nom: 'Anglais' },
-            { id: 'lv2', nom: 'Espagnol' },
-            { id: 'eps', nom: 'EPS' },
-            { id: 'arts-plastiques', nom: 'Arts' },
-            { id: 'musique', nom: 'Musique' }
+            { id: 'francais', nom: 'Français' }, { id: 'maths', nom: 'Maths' },
+            { id: 'histoire-geo', nom: 'Histoire-Géo' }, { id: 'emc', nom: 'EMC' },
+            { id: 'physique-chimie', nom: 'Phys-Chimie' }, { id: 'svt', nom: 'SVT' },
+            { id: 'technologie', nom: 'Techno' }, { id: 'lv1', nom: 'Anglais' },
+            { id: 'lv2', nom: 'Espagnol' }, { id: 'eps', nom: 'EPS' },
+            { id: 'arts-plastiques', nom: 'Arts' }, { id: 'musique', nom: 'Musique' }
         ];
 
         const seuils = [
@@ -437,13 +451,13 @@
             container.innerHTML = '';
             matieresObligatoires.forEach(matiere => {
                 const card = document.createElement('div');
-                card.className = 'item-card';
+                card.className = 'item-grid';
                 card.innerHTML = `
                     <div class="item-label">${matiere.nom}</div>
                     <div class="inputs-group">
-                        <input type="number" id="${matiere.id}-t1" min="0" max="20" step="0.1" placeholder="T1" oninput="updateAll()">
-                        <input type="number" id="${matiere.id}-t2" min="0" max="20" step="0.1" placeholder="T2" oninput="updateAll()">
-                        <input type="number" id="${matiere.id}-t3" min="0" max="20" step="0.1" placeholder="T3" oninput="updateAll()">
+                        <input type="number" id="${matiere.id}-t1" placeholder="T1" oninput="updateAll()">
+                        <input type="number" id="${matiere.id}-t2" placeholder="T2" oninput="updateAll()">
+                        <input type="number" id="${matiere.id}-t3" placeholder="T3" oninput="updateAll()">
                     </div>
                     <div class="card-moyenne" id="${matiere.id}-moyenne">-</div>
                 `;
@@ -471,7 +485,7 @@
         }
 
         function calculerMoyenne(...notes) {
-            const notesValides = notes.filter(n => n !== null && n !== undefined && !isNaN(n) && n !== "");
+            const notesValides = notes.filter(n => n !== null && n !== undefined && n !== "" && !isNaN(n));
             return notesValides.length > 0 ? notesValides.reduce((a, b) => a + parseFloat(b), 0) / notesValides.length : 0;
         }
 
@@ -487,24 +501,21 @@
                 const t2 = parseFloat(document.getElementById(`${matiere.id}-t2`).value) || 0;
                 const t3 = parseFloat(document.getElementById(`${matiere.id}-t3`).value) || 0;
                 const moyenne = calculerMoyenne(t1, t2, t3);
-                document.getElementById(`${matiere.id}-moyenne`).textContent = moyenne > 0 ? arrondir(moyenne) : '-';
+                document.getElementById(`${matiere.id}-moyenne`).textContent = (t1||t2||t3) ? arrondir(moyenne).toFixed(2) : '-';
                 sommeMatières += moyenne;
             });
 
-            // Latin Bonus
             const latinT1 = parseFloat(document.getElementById('latin-t1').value) || 0;
             const latinT2 = parseFloat(document.getElementById('latin-t2').value) || 0;
             const latinT3 = parseFloat(document.getElementById('latin-t3').value) || 0;
             const moyenneLatin = calculerMoyenne(latinT1, latinT2, latinT3);
-            document.getElementById('latin-moyenne').textContent = moyenneLatin > 0 ? arrondir(moyenneLatin) : '-';
+            document.getElementById('latin-moyenne').textContent = (latinT1||latinT2||latinT3) ? arrondir(moyenneLatin).toFixed(2) : '-';
             const pointsLatin = moyenneLatin > 10 ? (moyenneLatin - 10) : 0;
 
-            // 1. Contrôle Continu (40%)
             const moyenneCC = Math.min((sommeMatières + pointsLatin) / 12, 20) || 0;
             document.getElementById('cc-score').textContent = `${arrondir(moyenneCC).toFixed(2)}/20`;
             document.getElementById('cc-progress').style.width = `${(moyenneCC / 20) * 100}%`;
 
-            // 2. Épreuves finales (60%)
             const notesFinales = [
                 parseFloat(document.getElementById('francais-final').value) || 0,
                 parseFloat(document.getElementById('maths-final').value) || 0,
@@ -512,11 +523,13 @@
                 parseFloat(document.getElementById('sciences-final').value) || 0,
                 parseFloat(document.getElementById('oral-final').value) || 0
             ];
-            const moyenneFinales = calculerMoyenne(...notesFinales) || 0;
+            
+            const hasFinales = document.getElementById('francais-final').value || document.getElementById('maths-final').value || document.getElementById('histoire-final').value || document.getElementById('sciences-final').value || document.getElementById('oral-final').value;
+            const moyenneFinales = hasFinales ? calculerMoyenne(...notesFinales) : 0;
+            
             document.getElementById('epreuves-score').textContent = `${arrondir(moyenneFinales).toFixed(2)}/20`;
             document.getElementById('epreuves-progress').style.width = `${(moyenneFinales / 20) * 100}%`;
 
-            // 3. Note finale Globale
             const moyenneFinale = (moyenneCC * 0.4) + (moyenneFinales * 0.6) || 0;
             document.getElementById('global-score').textContent = `${arrondir(moyenneFinale).toFixed(2)}/20`;
             document.getElementById('main-progress').style.width = `${(moyenneFinale / 20) * 100}%`;
@@ -529,27 +542,25 @@
             zone.innerHTML = '';
 
             seuils.forEach((seuil) => {
-                const badge = document.createElement('div');
-                badge.className = 'mention-badge';
+                const row = document.createElement('div');
+                row.className = 'mention-row-ui';
                 
-                let statusText = '';
+                let statusBlock = '';
                 if (scoreActuel >= seuil.valeur) {
-                    badge.classList.add('unlocked');
-                    statusText = `<span class="status-unlocked">Atteint</span>`;
+                    row.classList.add('unlocked');
+                    statusBlock = `<span class="mention-diff-lbl diff-unlocked">Atteint</span>`;
                 } else {
                     const manque = arrondir(seuil.valeur - scoreActuel);
-                    statusText = `<span class="status-locked">Faltan ${manque} pt(s)</span>`;
-                    statusText = `<span class="status-locked">Manque ${manque} pt(s)</span>`;
+                    statusBlock = `<span class="mention-diff-lbl diff-locked">Manque ${manque.toFixed(2)} pt(s)</span>`;
                 }
 
-                badge.innerHTML = `
-                    <div class="mention-info">
-                        <span class="mention-emoji">${seuil.emoji}</span>
-                        <span class="mention-name">${seuil.nom}</span>
+                row.innerHTML = `
+                    <div class="mention-top-bar">
+                        <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
+                        ${statusBlock}
                     </div>
-                    <div class="mention-status">${statusText}</div>
                 `;
-                zone.appendChild(badge);
+                zone.appendChild(row);
             });
         }
 
