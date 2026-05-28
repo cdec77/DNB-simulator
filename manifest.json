@@ -2,7 +2,8 @@
   "name": "Simulateur DNB 2026",
   "short_name": "DNB2026",
   "description": "Simulez vos notes pour le Diplôme National du Brevet 2026",
-  "start_url": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#f8f9fa",
   "theme_color": "#4a90e2",
@@ -64,6 +65,5 @@
   ],
   "apple_mobile_web_app_capable": true,
   "apple_mobile_web_app_status_bar_style": "black-translucent",
-  "apple_mobile_web_app_title": "Simulateur DNB 2026",
-  "prefer_related_applications": false
+  "apple_mobile_web_app_title": "Simulateur DNB 2026"
 }
