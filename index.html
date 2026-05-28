@@ -6,46 +6,18 @@
     <meta name="theme-color" content="#4a90e2">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Simulateur DNB 2026">
-    <meta name="apple-mobile-web-app-title" content="Simulateur DNB 2026">
-    <meta name="description" content="Simulez vos notes pour le Diplôme National du Brevet 2026">
-
     <title>Simulateur DNB 2026</title>
-
-    <!-- Liens vers les icônes et manifest -->
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
     <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512x512.png">
-
-    <!-- Font Awesome local -->
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-
     <style>
-        :root {
-            --primary-color: #4a90e2;
-            --success-color: #27ae60;
-            --warning-color: #f39c12;
-            --danger-color: #e74c3c;
-            --light-gray: #f8f9fa;
-            --medium-gray: #e9ecef;
-            --dark-gray: #6c757d;
-            --text-color: #333;
-            --gold-color: #ffd700;
-        }
-
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: var(--light-gray);
-            color: var(--text-color);
+            background-color: white;
+            color: #333;
             line-height: 1.4;
             font-size: 14px;
         }
@@ -58,24 +30,15 @@
         }
 
         .header {
-            background: linear-gradient(90deg, var(--primary-color), #5a67d8);
+            background-color: #4a90e2;
             color: white;
             padding: 12px 15px;
             text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
         .header h1 {
             margin: 0;
             font-size: 1.3em;
-            font-weight: 600;
-        }
-
-        .header h1 i {
-            margin-right: 8px;
         }
 
         .copyright {
@@ -86,34 +49,21 @@
 
         .install-pwa {
             display: none;
-            background-color: var(--primary-color);
+            background-color: #4a90e2;
             color: white;
             border: none;
             padding: 12px;
             border-radius: 5px;
             font-size: 1em;
-            font-weight: 600;
             width: calc(100% - 30px);
             margin: 10px 15px;
             cursor: pointer;
-            transition: background-color 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .install-pwa i {
-            margin-right: 8px;
-        }
-
-        .install-pwa:active {
-            background-color: #3a7bc8;
         }
 
         .tabs {
             display: flex;
             background-color: white;
-            border-bottom: 1px solid var(--medium-gray);
+            border-bottom: 1px solid #ddd;
             padding: 0 10px;
         }
 
@@ -123,17 +73,11 @@
             padding: 10px 5px;
             cursor: pointer;
             border-bottom: 3px solid transparent;
-            font-weight: 500;
-            font-size: 0.9em;
         }
 
         .tab.active {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
-        }
-
-        .tab i {
-            margin-right: 5px;
+            color: #4a90e2;
+            border-bottom-color: #4a90e2;
         }
 
         .tab-content {
@@ -148,31 +92,6 @@
             display: block;
         }
 
-        .epreuves-results-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .epreuves-section, .results-section {
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .section-title {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            color: var(--primary-color);
-            font-size: 1.1em;
-        }
-
-        .section-title i {
-            margin-right: 8px;
-        }
-
         .matiere-group {
             margin-bottom: 15px;
         }
@@ -185,7 +104,7 @@
 
         .matiere-label {
             width: 35%;
-            font-weight: 500;
+            font-weight: bold;
             font-size: 0.9em;
         }
 
@@ -198,7 +117,7 @@
         .trimestre-inputs input {
             flex: 1;
             padding: 8px;
-            border: 1px solid var(--medium-gray);
+            border: 1px solid #ddd;
             border-radius: 4px;
             text-align: center;
             font-size: 0.9em;
@@ -207,24 +126,17 @@
         .moyenne-cell {
             width: 15%;
             text-align: center;
-            font-weight: 600;
-            color: var(--primary-color);
+            font-weight: bold;
+            color: #4a90e2;
             font-size: 0.9em;
         }
 
         .option-info {
-            background-color: var(--light-gray);
+            background-color: #f8f9fa;
             padding: 10px;
             border-radius: 5px;
             margin-bottom: 15px;
             font-size: 0.85em;
-            display: flex;
-            align-items: center;
-        }
-
-        .option-info i {
-            margin-right: 8px;
-            color: var(--gold-color);
         }
 
         .epreuve-row {
@@ -235,5 +147,397 @@
 
         .epreuve-label {
             width: 60%;
-            font-weight: 500;
+            font-weight: bold;
             font-size: 0.9em;
+        }
+
+        .epreuve-input {
+            width: 40%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .results-container {
+            padding: 10px;
+        }
+
+        .result-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #4a90e2;
+        }
+
+        .result-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+
+        .result-value {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #4a90e2;
+        }
+
+        .result-ok {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .result-error {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .highlight {
+            background-color: #e8f4fc;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .info-text {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            background-color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.8em;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        @media (max-width: 360px) {
+            .matiere-label { width: 40%; }
+            .trimestre-inputs { width: 45%; }
+            .moyenne-cell { width: 15%; }
+            .epreuve-label { width: 65%; }
+            .epreuve-input { width: 35%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Simulateur DNB 2026</h1>
+            <div class="copyright">© c dc</div>
+        </div>
+
+        <button class="install-pwa" id="installButton" onclick="installPWA()">Installer l'application</button>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('matières')">Matières</div>
+            <div class="tab" onclick="switchTab('epreuves-results')">Épreuves + Résultats</div>
+        </div>
+
+        <!-- Onglet Matières -->
+        <div id="matières" class="tab-content active">
+            <div class="info-text">
+                <strong>40%</strong> : Moyenne des 12 matières (11 obligatoires + Latin si >10/20).
+            </div>
+
+            <div class="matiere-group">
+                <div class="section-title">Matières obligatoires</div>
+                <div id="matières-list"></div>
+            </div>
+
+            <div class="matiere-group">
+                <div class="section-title">Option Latin</div>
+                <div class="option-info">
+                    Seuls les points <strong>supérieurs à 10</strong> du Latin sont ajoutés à la somme des 12 matières.
+                </div>
+                <div class="matiere-row">
+                    <div class="matiere-label">Latin</div>
+                    <div class="trimestre-inputs">
+                        <input type="number" id="latin-t1" min="0" max="20" step="0.01" placeholder="T1" oninput="updateAll()">
+                        <input type="number" id="latin-t2" min="0" max="20" step="0.01" placeholder="T2" oninput="updateAll()">
+                        <input type="number" id="latin-t3" min="0" max="20" step="0.01" placeholder="T3" oninput="updateAll()">
+                    </div>
+                    <div class="moyenne-cell" id="latin-moyenne">-</div>
+                </div>
+                <div style="text-align: right; font-size: 0.85em; color: #666;">
+                    +<span id="latin-points">0</span> pts
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet Épreuves + Résultats -->
+        <div id="epreuves-results" class="tab-content">
+            <div class="epreuves-results-container">
+                <div class="epreuves-section">
+                    <div class="section-title">Épreuves finales (60%)</div>
+                    <div class="epreuve-row">
+                        <div class="epreuve-label">Français</div>
+                        <input type="number" class="epreuve-input" id="francais-final" min="0" max="20" step="0.01" placeholder="Note" oninput="updateAll()">
+                    </div>
+                    <div class="epreuve-row">
+                        <div class="epreuve-label">Mathématiques</div>
+                        <input type="number" class="epreuve-input" id="maths-final" min="0" max="20" step="0.01" placeholder="Note" oninput="updateAll()">
+                    </div>
+                    <div class="epreuve-row">
+                        <div class="epreuve-label">Histoire-Géo/EMC</div>
+                        <input type="number" class="epreuve-input" id="histoire-final" min="0" max="20" step="0.01" placeholder="Note" oninput="updateAll()">
+                    </div>
+                    <div class="epreuve-row">
+                        <div class="epreuve-label">Sciences</div>
+                        <input type="number" class="epreuve-input" id="sciences-final" min="0" max="20" step="0.01" placeholder="Note" oninput="updateAll()">
+                    </div>
+                    <div class="epreuve-row">
+                        <div class="epreuve-label">Oral</div>
+                        <input type="number" class="epreuve-input" id="oral-final" min="0" max="20" step="0.01" placeholder="Note" oninput="updateAll()">
+                    </div>
+                    <div style="margin-top: 10px; text-align: center;">
+                        <strong>Moyenne épreuves:</strong> <span id="moyenne-finales" style="color: #4a90e2; font-weight: bold;">-</span>/20
+                    </div>
+                </div>
+
+                <div class="results-section">
+                    <div class="section-title">Résultats</div>
+                    <div class="results-container" id="result"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Simulateur DNB 2026 - © c dc
+        </div>
+    </div>
+
+    <script>
+        // Variable pour stocker l'événement d'installation
+        let deferredPrompt;
+
+        // Écouter l'événement beforeinstallprompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installButton').style.display = 'block';
+        });
+
+        // Fonction pour installer la PWA
+        function installPWA() {
+            document.getElementById('installButton').style.display = 'none';
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                deferredPrompt = null;
+            });
+        }
+
+        // Enregistrement du Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+
+        // Liste des 11 matières obligatoires
+        const matieresObligatoires = [
+            { id: 'francais', nom: 'Français' },
+            { id: 'maths', nom: 'Mathématiques' },
+            { id: 'histoire-geo', nom: 'Histoire-Géo' },
+            { id: 'emc', nom: 'EMC' },
+            { id: 'physique-chimie', nom: 'Physique-Chimie' },
+            { id: 'svt', nom: 'SVT' },
+            { id: 'technologie', nom: 'Technologie' },
+            { id: 'lv1', nom: 'Anglais' },
+            { id: 'lv2', nom: 'Espagnol' },
+            { id: 'eps', nom: 'EPS' },
+            { id: 'arts-plastiques', nom: 'Arts plastiques' },
+            { id: 'musique', nom: 'Musique' }
+        ];
+
+        // Générer la liste des matières
+        function generateMatièresList() {
+            const container = document.getElementById('matières-list');
+            container.innerHTML = '';
+
+            matieresObligatoires.forEach(matiere => {
+                const row = document.createElement('div');
+                row.className = 'matiere-row';
+                row.innerHTML = `
+                    <div class="matiere-label">${matiere.nom}</div>
+                    <div class="trimestre-inputs">
+                        <input type="number" id="${matiere.id}-t1" min="0" max="20" step="0.01" placeholder="T1" oninput="updateAll()">
+                        <input type="number" id="${matiere.id}-t2" min="0" max="20" step="0.01" placeholder="T2" oninput="updateAll()">
+                        <input type="number" id="${matiere.id}-t3" min="0" max="20" step="0.01" placeholder="T3" oninput="updateAll()">
+                    </div>
+                    <div class="moyenne-cell" id="${matiere.id}-moyenne">-</div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        // Basculer entre les onglets
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            updateAll();
+        }
+
+        // Calculer la moyenne (même avec des notes manquantes)
+        function calculerMoyenne(...notes) {
+            const notesValides = notes.filter(n => n !== null && n !== undefined && !isNaN(n) && n !== "");
+            if (notesValides.length === 0) return 0;
+            return notesValides.reduce((a, b) => a + parseFloat(b), 0) / notesValides.length;
+        }
+
+        // Arrondir à 2 décimales
+        function arrondir(valeur) {
+            return Math.round(valeur * 100) / 100;
+        }
+
+        // Mettre à jour toutes les moyennes et résultats
+        function updateAll() {
+            let sommeMatières = 0;
+
+            // Calcul des moyennes pour les 11 matières obligatoires
+            matieresObligatoires.forEach(matiere => {
+                const t1 = parseFloat(document.getElementById(`${matiere.id}-t1`).value) || null;
+                const t2 = parseFloat(document.getElementById(`${matiere.id}-t2`).value) || null;
+                const t3 = parseFloat(document.getElementById(`${matiere.id}-t3`).value) || null;
+                const moyenne = calculerMoyenne(t1, t2, t3);
+                document.getElementById(`${matiere.id}-moyenne`).textContent = moyenne > 0 ? arrondir(moyenne) : '-';
+                sommeMatières += moyenne;
+            });
+
+            // Latin : calcul des points supplémentaires (seulement si moyenne > 10)
+            const latinT1 = parseFloat(document.getElementById('latin-t1').value) || null;
+            const latinT2 = parseFloat(document.getElementById('latin-t2').value) || null;
+            const latinT3 = parseFloat(document.getElementById('latin-t3').value) || null;
+            const moyenneLatin = calculerMoyenne(latinT1, latinT2, latinT3);
+            document.getElementById('latin-moyenne').textContent = moyenneLatin > 0 ? arrondir(moyenneLatin) : '-';
+
+            // Calcul des points supplémentaires du Latin (seulement si moyenne > 10)
+            const pointsLatin = moyenneLatin > 10 ? (moyenneLatin - 10) : 0;
+            document.getElementById('latin-points').textContent = pointsLatin > 0 ? `+${arrondir(pointsLatin)}` : '0';
+
+            // NOUVEAU CALCUL : (Somme des 11 matières + points Latin) / 12
+            const sommeTotale = sommeMatières + pointsLatin;
+            let moyenneCC = sommeTotale / 12; // Division par 12
+            moyenneCC = Math.min(moyenneCC, 20); // Plafond à 20/20
+
+            // Épreuves finales (60%)
+            const notesFinales = [
+                parseFloat(document.getElementById('francais-final').value) || 0,
+                parseFloat(document.getElementById('maths-final').value) || 0,
+                parseFloat(document.getElementById('histoire-final').value) || 0,
+                parseFloat(document.getElementById('sciences-final').value) || 0,
+                parseFloat(document.getElementById('oral-final').value) || 0
+            ];
+            const moyenneFinales = calculerMoyenne(...notesFinales);
+            document.getElementById('moyenne-finales').textContent = moyenneFinales > 0 ? arrondir(moyenneFinales) : '-';
+
+            // Moyenne finale DNB
+            const moyenneFinale = (moyenneCC * 0.4) + (moyenneFinales * 0.6);
+
+            // Seuils
+            const seuils = [
+                { nom: "DNB", valeur: 10, emoji: "🎓" },
+                { nom: "Assez bien", valeur: 12, emoji: "🌟" },
+                { nom: "Bien", valeur: 14, emoji: "🌟🌟" },
+                { nom: "Très bien", valeur: 16, emoji: "🌟🌟🌟" },
+                { nom: "Félicitations", valeur: 18, emoji: "🏆" }
+            ];
+
+            // Génération des résultats
+            let resultHTML = `
+                <div class="result-card">
+                    <div class="result-title">Moyenne contrôle continu (<span class="highlight">40%</span>)</div>
+                    <div class="result-value">${moyenneCC > 0 ? arrondir(moyenneCC) : '-'}/20</div>
+                    ${pointsLatin > 0 ? `<div style="font-size: 0.85em; color: #666;">+${arrondir(pointsLatin)} pts (Latin)</div>` : ''}
+                    <div style="font-size: 0.8em; color: #666; margin-top: 5px;">
+                        Calcul : (Somme des 11 matières + ${pointsLatin > 0 ? arrondir(pointsLatin) : '0'} pts Latin) / 12
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-title">Moyenne épreuves finales (<span class="highlight">60%</span>)</div>
+                    <div class="result-value">${moyenneFinales > 0 ? arrondir(moyenneFinales) : '-'}/20</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-title">Moyenne finale DNB</div>
+                    <div class="result-value">${moyenneFinale > 0 ? arrondir(moyenneFinale) : '-'}/20</div>
+                </div>
+            `;
+
+            // Mention obtenue
+            let mention = null;
+            for (let i = seuils.length - 1; i >= 0; i--) {
+                if (moyenneFinale >= seuils[i].valeur) {
+                    mention = seuils[i];
+                    break;
+                }
+            }
+
+            if (mention) {
+                resultHTML += `
+                    <div class="result-card" style="border-left: 4px solid #27ae60;">
+                        <div class="result-title">${mention.emoji} ${mention.nom}</div>
+                        <div class="result-ok">Félicitations !</div>
+                    </div>
+                `;
+            } else if (moyenneFinale > 0) {
+                resultHTML += `
+                    <div class="result-card">
+                        <div class="result-title">❌ Pas encore le DNB</div>
+                        <div class="result-error">Il manque ${arrondir(10 - moyenneFinale)} pts</div>
+                    </div>
+                `;
+            }
+
+            // Points manquants pour chaque mention
+            if (moyenneFinale > 0) {
+                resultHTML += `<div class="result-card"><div class="result-title">Points manquants:</div></div>`;
+                seuils.forEach(seuil => {
+                    if (moyenneFinale < seuil.valeur) {
+                        const manque = arrondir(seuil.valeur - moyenneFinale);
+                        resultHTML += `
+                            <div class="result-card">
+                                <div class="result-title">${seuil.emoji} ${seuil.nom}</div>
+                                <div class="result-error">Manque ${manque} pts</div>
+                            </div>
+                        `;
+                    }
+                });
+            }
+
+            document.getElementById('result').innerHTML = resultHTML;
+        }
+
+        // Initialisation
+        window.onload = function() {
+            generateMatièresList();
+            updateAll();
+        };
+    </script>
+</body>
+</html>
