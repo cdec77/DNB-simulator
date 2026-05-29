@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulateur DNB 2026</title>
+    <title>Simulateur DNB 2026 - Lumineux & Fun</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512x512.png">
@@ -69,7 +69,7 @@
             padding-bottom: 2px;
         }
 
-        /* NOUVEAU STYLE TITRE REBONDI / CARTOON & FESTIF */
+        /* TITRE REDRESSÉ (SANS ROTATION) & STYLE CARTOON CONSERVÉ */
         h1 {
             font-family: 'Fredoka', sans-serif;
             font-weight: 900;
@@ -83,7 +83,7 @@
             -webkit-text-fill-color: transparent;
             /* Multi-ombres pour créer un contour 3D type BD / Cartoon */
             filter: drop-shadow(2px 2px 0px rgba(15, 23, 42, 0.15));
-            transform: rotate(-1.5deg); /* Légère inclinaison festive */
+            transform: none; /* Titre parfaitement droit */
             margin-top: 2px;
         }
 
@@ -434,7 +434,7 @@
 
         <div class="header-area">
             <h1>📊 Simulateur DNB 2026</h1>
-            <div class="copyright">© Cyrille de Chanteloup - Tous droits réservés</div>
+            <div class="copyright">© c dc - Tous droits réservés</div>
             <button class="install-btn" id="pwa-install-btn">📲 Installer</button>
         </div>
 
@@ -474,11 +474,11 @@
             <div class="flash-box">
                 <div class="flash-row">
                     <label>📝 Moyenne Globale CC :</label>
-                    <input type="number" id="flash-cc-input" step="any" min="0" max="20" placeholder="Note/20" oninput="saveState(); validateInput(this); triggerFlashUpdate()">
+                    <input type="text" inputmode="decimal" id="flash-cc-input" placeholder="Ex: 14.5" oninput="saveState(); sanitizeDecimalInput(this); triggerFlashUpdate()">
                 </div>
                 <div class="flash-row" style="margin-top: 4px; border-top: 1px dashed rgba(0,0,0,0.06); padding-top: 4px;">
                     <label>📜 Note de Latin (Option) :</label>
-                    <input type="number" id="flash-latin-input" step="any" min="0" max="20" placeholder="Vide = 10" oninput="saveState(); validateInput(this); triggerFlashUpdate()">
+                    <input type="text" inputmode="decimal" id="flash-latin-input" placeholder="Vide = 10" oninput="saveState(); sanitizeDecimalInput(this); triggerFlashUpdate()">
                 </div>
             </div>
             <div class="section-title">🏆 Objectifs Épreuves (Pondération 60%)</div>
@@ -516,7 +516,7 @@
         </div>
 
         <div class="footer">
-            <p>© Cyrille de Chanteloup - Tous droits réservés</p>
+            <p>© c dc - Simulateur DNB 2026 - Tous droits réservés</p>
         </div>
     </div>
 
@@ -552,7 +552,7 @@
         }
 
         function saveState() {
-            const inputs = document.querySelectorAll('input[type="number"]');
+            const inputs = document.querySelectorAll('input');
             const state = {};
             inputs.forEach(input => { state[input.id] = input.value; });
             if (historyStack.length === 0 || JSON.stringify(historyStack[historyStack.length - 1]) !== JSON.stringify(state)) {
@@ -595,6 +595,16 @@
             if (parseFloat(input.value) > 20) input.value = "20";
         }
 
+        // Nettoyage et conversion à la volée des virgules pour autoriser les décimaux de manière fluide
+        function sanitizeDecimalInput(input) {
+            let val = input.value.replace(',', '.');
+            val = val.replace(/[^0-9.]/g, '');
+            const parts = val.split('.');
+            if (parts.length > 2) val = parts[0] + '.' + parts.slice(1).join('');
+            if (parseFloat(val) > 20) val = "20";
+            input.value = val;
+        }
+
         function generateMatièresList() {
             const container = document.getElementById('matières-list');
             container.innerHTML = '';
@@ -616,7 +626,7 @@
         }
 
         function setupAutoTab() {
-            const inputs = document.querySelectorAll('input[type="number"]');
+            const inputs = document.querySelectorAll('input');
             inputs.forEach((input, index) => {
                 input.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter') {
@@ -669,16 +679,16 @@
             const rawCC = document.getElementById('flash-cc-input').value;
             const rawLatin = document.getElementById('flash-latin-input').value;
             
-            if (rawCC !== "") {
+            if (rawCC !== "" && !isNaN(parseFloat(rawCC))) {
                 matieresObligatoires.forEach(matiere => {
-                    document.getElementById(`${matiere.id}-t1`).value = rawCC;
+                    document.getElementById(`${matiere.id}-t1`).value = parseFloat(rawCC);
                     document.getElementById(`${matiere.id}-t2`).value = "";
                     document.getElementById(`${matiere.id}-t3`).value = "";
                 });
             }
 
-            if (rawLatin !== "") {
-                document.getElementById('latin-t1').value = rawLatin;
+            if (rawLatin !== "" && !isNaN(parseFloat(rawLatin))) {
+                document.getElementById('latin-t1').value = parseFloat(rawLatin);
                 document.getElementById('latin-t2').value = "";
                 document.getElementById('latin-t3').value = "";
             } else {
@@ -694,7 +704,7 @@
         function syncLatinFromDetail() {
             if (isSyncing) return;
             const moyenneLatin = calculerMoyenneMatiere('latin');
-            document.getElementById('flash-latin-input').value = moyenneLatin !== null ? arrondir(moyenneLatin) : "";
+            document.getElementById('flash-latin-input').value = moyenneLatin !== null ? arrondir(moyenneLatin).toString() : "";
         }
 
         function updateAll() {
@@ -713,7 +723,7 @@
             let moyenneLatin = calculerMoyenneMatiere('latin');
             if (moyenneLatin === null) {
                 const flashLatinRaw = document.getElementById('flash-latin-input').value;
-                moyenneLatin = flashLatinRaw !== "" ? parseFloat(flashLatinRaw) : 10; 
+                moyenneLatin = flashLatinRaw !== "" && !isNaN(parseFloat(flashLatinRaw)) ? parseFloat(flashLatinRaw) : 10; 
             }
             
             const bonusElement = document.getElementById('latin-bonus');
@@ -732,8 +742,8 @@
             document.getElementById('cc-score').textContent = `${arrondir(moyenneCC).toFixed(2)}/20`;
             document.getElementById('cc-progress').style.width = `${(moyenneCC / 20) * 100}%`;
 
-            if (!isSyncing) {
-                document.getElementById('flash-cc-input').value = matieresComptees > 0 ? arrondir(moyenneCC) : "";
+            if (!isSyncing && document.activeElement !== document.getElementById('flash-cc-input')) {
+                document.getElementById('flash-cc-input').value = matieresComptees > 0 ? arrondir(moyenneCC).toString() : "";
             }
 
             const finalFields = ['francais-final', 'maths-final', 'histoire-final', 'sciences-final', 'oral-final'];
@@ -771,9 +781,9 @@
                 return;
             }
 
-            const activeCC = rawCC !== "" ? parseFloat(rawCC) : ccScore;
+            const activeCC = (rawCC !== "" && !isNaN(parseFloat(rawCC))) ? parseFloat(rawCC) : ccScore;
             const rawLatin = document.getElementById('flash-latin-input').value;
-            const latVal = rawLatin !== "" ? parseFloat(rawLatin) : 10;
+            const latVal = (rawLatin !== "" && !isNaN(parseFloat(rawLatin))) ? parseFloat(rawLatin) : 10;
             const bonusLatFlash = latVal > 10 ? (latVal - 10) : 0;
 
             const pointsAcquisCC = Math.min(((activeCC * 12) + bonusLatFlash) / 12, 20) * 0.4;
