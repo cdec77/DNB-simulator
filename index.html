@@ -68,7 +68,6 @@
             align-items: center;
         }
 
-        /* STYLE DU TITRE PRINCIPAL (POLICE OUTFIT) */
         h1 {
             font-family: 'Outfit', sans-serif;
             color: #0f172a;
@@ -88,7 +87,6 @@
             font-weight: 600;
         }
 
-        /* ↩️ BOUTON ANNULER FLOTTANT EN BAS À DROITE */
         .undo-floating-btn {
             position: absolute;
             bottom: 25px;
@@ -352,7 +350,6 @@
             outline: none;
         }
 
-        /* POLICE DU TITRE DE SECTIONS */
         .section-title {
             font-family: 'Outfit', sans-serif;
             font-size: 0.75em;
@@ -502,7 +499,7 @@
                 <div class="item-grid epreuve-grid"><div class="item-label">🗣️ Oral de Projet</div><div class="inputs-group"><input type="number" id="oral-final" step="any" min="0" max="20" placeholder="Note/20" oninput="saveState(); validateInput(this); updateAll()"></div></div>
             </div>
 
-            <div class="section-title">🏆 Objectifs globaux détaillés</div>
+            <div class="section-title">🏆 Objectifs de moyenne générale</div>
             <div class="mentions-grid" id="mentions-zone"></div>
         </div>
 
@@ -729,13 +726,21 @@
                 document.getElementById('flash-cc-input').value = matieresComptees > 0 ? arrondir(moyenneCC) : "";
             }
 
+            /* FIX : SI PAS DE NOTE INDIQUEE = COMPTE COMME UN 0/20 */
             const finalFields = ['francais-final', 'maths-final', 'histoire-final', 'sciences-final', 'oral-final'];
-            let notesFinales = [];
+            let totalNotesFinales = 0;
+            
             finalFields.forEach(id => {
-                const val = document.getElementById(id).value; if (val !== "") notesFinales.push(parseFloat(val));
+                const val = document.getElementById(id).value;
+                if (val !== "") {
+                    totalNotesFinales += parseFloat(val);
+                } else {
+                    totalNotesFinales += 0; // Pas de note = 0
+                }
             });
 
-            const moyenneFinales = notesFinales.length > 0 ? notesFinales.reduce((a, b) => a + b, 0) / notesFinales.length : 0;
+            // On divise TOUJOURS par le nombre complet d'épreuves (5 épreuves obligatoires)
+            const moyenneFinales = totalNotesFinales / finalFields.length;
             document.getElementById('epreuves-score').textContent = `${arrondir(moyenneFinales).toFixed(2)}/20`;
             document.getElementById('epreuves-progress').style.width = `${(moyenneFinales / 20) * 100}%`;
 
@@ -810,15 +815,14 @@
                     row.innerHTML = `
                         <div class="mention-top-bar">
                             <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
-                            <span class="mention-diff-lbl diff-unlocked">Atteint</span>
+                            <span class="mention-diff-lbl diff-unlocked">Atteint ! 🎉</span>
                         </div>
                     `;
                 } else {
-                    const manque = arrondir(seuil.valeur - scoreActuel);
                     row.innerHTML = `
                         <div class="mention-top-bar">
-                            <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
-                            <span class="mention-diff-lbl diff-locked">Manque ${manque.toFixed(2)} pt(s)</span>
+                            <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom}</div>
+                            <span class="mention-diff-lbl diff-locked">Moyenne requise : <b>${seuil.valeur.toFixed(2)}/20</b></span>
                         </div>
                     `;
                 }
