@@ -9,7 +9,7 @@
     <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512x512.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700;900&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -66,25 +66,32 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding-bottom: 2px;
         }
 
+        /* NOUVEAU STYLE TITRE REBONDI / CARTOON & FESTIF */
         h1 {
-            font-family: 'Outfit', sans-serif;
-            color: #0f172a;
-            font-size: 1.35em;
+            font-family: 'Fredoka', sans-serif;
             font-weight: 900;
+            font-size: 1.5em;
+            color: #ffffff;
             letter-spacing: -0.5px;
             text-transform: uppercase;
-            background: linear-gradient(135deg, #0f172a 30%, var(--neon-blue));
+            /* Effet dégradé flashy */
+            background: linear-gradient(135deg, #2563eb, #00d2ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 4px 12px rgba(0, 119, 255, 0.15);
+            /* Multi-ombres pour créer un contour 3D type BD / Cartoon */
+            filter: drop-shadow(2px 2px 0px rgba(15, 23, 42, 0.15));
+            transform: rotate(-1.5deg); /* Légère inclinaison festive */
+            margin-top: 2px;
         }
 
         .copyright {
             font-size: 0.6em;
             color: #64748b;
             font-weight: 600;
+            margin-top: 2px;
         }
 
         .undo-floating-btn {
@@ -154,8 +161,7 @@
         .score-label-generale { color: var(--neon-green); font-weight: bold; }
 
         .score-number {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 800;
+            font-weight: 900;
             font-size: 1em;
         }
 
@@ -183,7 +189,6 @@
         .progress-bar.epreuves { background: var(--neon-pink); box-shadow: 0 0 6px rgba(255, 0, 127, 0.4); }
         .progress-bar.generale { background: var(--neon-green); box-shadow: 0 0 6px rgba(0, 179, 0, 0.4); }
 
-        /* RE-DESIGN DES ONGLETS POUR ÉVITER TOUT DÉBORDEMENT */
         .tabs {
             display: flex;
             justify-content: center;
@@ -291,9 +296,8 @@
         }
 
         .card-moyenne {
-            font-family: 'Outfit', sans-serif;
             text-align: right;
-            font-weight: 800;
+            font-weight: 900;
             color: var(--neon-green);
             font-size: 0.8em;
             display: flex;
@@ -302,7 +306,6 @@
         }
 
         .bonus-lbl {
-            font-family: 'Fredoka', sans-serif;
             font-size: 0.7em;
             color: var(--neon-yellow);
             font-weight: bold;
@@ -358,13 +361,12 @@
         }
 
         .section-title {
-            font-family: 'Outfit', sans-serif;
             font-size: 0.75em;
             color: #475569;
             text-transform: uppercase;
             letter-spacing: 0.8px;
             margin: 6px 0 3px 0;
-            font-weight: 800;
+            font-weight: 900;
         }
 
         .mentions-grid {
@@ -373,7 +375,6 @@
             gap: 5px;
         }
 
-        /* RE-DESIGN AVEC ALIGNEMENT VERTICAL (L'UNE AU DESSUS DE L'AUTRE) POUR SMARTPHONE */
         .mention-row-ui {
             background-color: #f8fafc;
             border: 1px solid var(--border-color);
@@ -407,9 +408,8 @@
         }
 
         .mention-diff-lbl {
-            font-family: 'Outfit', sans-serif;
             font-size: 0.82em;
-            font-weight: 800;
+            font-weight: 900;
             margin-top: 1px;
         }
 
@@ -511,7 +511,7 @@
                 <div class="item-grid epreuve-grid"><div class="item-label">🗣️ Oral de Projet</div><div class="inputs-group"><input type="number" id="oral-final" step="any" min="0" max="20" placeholder="Note/20" oninput="saveState(); validateInput(this); updateAll()"></div></div>
             </div>
 
-            <div class="section-title">🏆 Objectifs de moyenne générale</div>
+            <div class="section-title">🏆 Objectifs épreuves finales requises</div>
             <div class="mentions-grid" id="mentions-zone"></div>
         </div>
 
@@ -757,7 +757,7 @@
             document.getElementById('main-progress').style.width = `${(moyenneFinale / 20) * 100}%`;
 
             checkAudioTriggers(moyenneFinale);
-            renderMentions(moyenneFinale, 'mentions-zone');
+            renderMentions(moyenneCC, moyenneFinale, aDesNotesExam, 'mentions-zone');
             updateFlash(moyenneCC, moyenneFinale, aDesNotesExam);
         }
 
@@ -830,29 +830,59 @@
             });
         }
 
-        function renderMentions(scoreActuel, zoneId) {
+        function renderMentions(ccScore, scoreActuel, aDesNotesExam, zoneId) {
             const zone = document.getElementById(zoneId);
             zone.innerHTML = '';
+
+            const pointsAcquisCC = ccScore * 0.4;
 
             seuils.forEach((seuil) => {
                 const row = document.createElement('div');
                 row.className = 'mention-row-ui';
                 
-                if (scoreActuel >= seuil.valeur) {
-                    row.classList.add('unlocked');
-                    row.innerHTML = `
-                        <div class="mention-top-bar">
-                            <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
-                            <span class="mention-diff-lbl diff-unlocked">Atteint ! 🎉</span>
-                        </div>
-                    `;
+                if (aDesNotesExam) {
+                    if (scoreActuel >= seuil.valeur) {
+                        row.classList.add('unlocked');
+                        row.innerHTML = `
+                            <div class="mention-top-bar">
+                                <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
+                                <span class="mention-diff-lbl diff-unlocked">Atteint ! 🎉</span>
+                            </div>
+                        `;
+                    } else {
+                        row.innerHTML = `
+                            <div class="mention-top-bar">
+                                <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
+                                <span class="mention-diff-lbl diff-locked">Insuffisant actuellement</span>
+                            </div>
+                        `;
+                    }
                 } else {
-                    row.innerHTML = `
-                        <div class="mention-top-bar">
-                            <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
-                            <span class="mention-diff-lbl diff-locked">Moyenne requise : <b>${seuil.valeur.toFixed(2)}/20</b></span>
-                        </div>
-                    `;
+                    const noteRequiseEpreuves = (seuil.valeur - pointsAcquisCC) / 0.6;
+
+                    if (noteRequiseEpreuves <= 0) {
+                        row.classList.add('unlocked');
+                        row.innerHTML = `
+                            <div class="mention-top-bar">
+                                <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
+                                <span class="mention-diff-lbl diff-unlocked">Sécurisé ! 🎉</span>
+                            </div>
+                        `;
+                    } else if (noteRequiseEpreuves > 20) {
+                        row.innerHTML = `
+                            <div class="mention-top-bar">
+                                <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
+                                <span class="mention-diff-lbl diff-locked">Inaccessible</span>
+                            </div>
+                        `;
+                    } else {
+                        row.innerHTML = `
+                            <div class="mention-top-bar">
+                                <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
+                                <span class="mention-diff-lbl diff-locked">Moyenne exam requise : <b>${arrondir(noteRequiseEpreuves).toFixed(2)}/20</b></span>
+                            </div>
+                        `;
+                    }
                 }
                 zone.appendChild(row);
             });
