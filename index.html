@@ -678,7 +678,6 @@
 
             isSyncing = false;
             updateAll();
-            updateFlash();
         }
 
         function syncLatinFromDetail() {
@@ -726,20 +725,19 @@
                 document.getElementById('flash-cc-input').value = matieresComptees > 0 ? arrondir(moyenneCC) : "";
             }
 
-            /* FIX : SI PAS DE NOTE INDIQUEE = COMPTE COMME UN 0/20 */
             const finalFields = ['francais-final', 'maths-final', 'histoire-final', 'sciences-final', 'oral-final'];
             let totalNotesFinales = 0;
+            let aDesNotesExam = false;
             
             finalFields.forEach(id => {
                 const val = document.getElementById(id).value;
                 if (val !== "") {
                     totalNotesFinales += parseFloat(val);
-                } else {
-                    totalNotesFinales += 0; // Pas de note = 0
+                    aDesNotesExam = true;
                 }
             });
 
-            // On divise TOUJOURS par le nombre complet d'épreuves (5 épreuves obligatoires)
+            // Si aucune note mais qu'on a du CC, on divise par 5 (considéré comme 0)
             const moyenneFinales = totalNotesFinales / finalFields.length;
             document.getElementById('epreuves-score').textContent = `${arrondir(moyenneFinales).toFixed(2)}/20`;
             document.getElementById('epreuves-progress').style.width = `${(moyenneFinales / 20) * 100}%`;
@@ -750,53 +748,77 @@
 
             checkAudioTriggers(moyenneFinale);
             renderMentions(moyenneFinale, 'mentions-zone');
-            updateFlash();
+            updateFlash(moyenneCC, moyenneFinale, aDesNotesExam);
         }
 
-        function updateFlash() {
+        /* LIEN RESTAURÉ ET CORRIGÉ POUR L'OPTION FLASH */
+        function updateFlash(ccScore, moyenneFinaleActuelle, aDesNotesExam) {
             const rawCC = document.getElementById('flash-cc-input').value;
             const zone = document.getElementById('flash-mentions-zone');
             zone.innerHTML = '';
 
-            if (rawCC === "") {
+            if (rawCC === "" && ccScore === 0) {
                 zone.innerHTML = '<div style="font-size:0.8em; color:#64748b; text-align:center; padding:10px; font-weight: 600;">Entrez votre moyenne continue pour simuler.</div>';
                 return;
             }
 
-            const ccScore = parseFloat(rawCC);
+            const activeCC = rawCC !== "" ? parseFloat(rawCC) : ccScore;
             const rawLatin = document.getElementById('flash-latin-input').value;
             const latVal = rawLatin !== "" ? parseFloat(rawLatin) : 10;
             const bonusLatFlash = latVal > 10 ? (latVal - 10) : 0;
 
-            const pointsAcquisCC = Math.min(((ccScore * 12) + bonusLatFlash) / 12, 20) * 0.4;
+            // Calcul de la part des points déjà sécurisés par le CC (pondération 40%)
+            const pointsAcquisCC = Math.min(((activeCC * 12) + bonusLatFlash) / 12, 20) * 0.4;
 
             seuils.forEach((seuil) => {
-                const noteRequiseEpreuves = (seuil.valeur - pointsAcquisCC) / 0.6;
                 const row = document.createElement('div');
                 row.className = 'mention-row-ui';
 
-                if (noteRequiseEpreuves <= 0) {
-                    row.classList.add('unlocked');
-                    row.innerHTML = `
-                        <div class="mention-top-bar">
-                            <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
-                            <span class="mention-diff-lbl diff-unlocked">Sécurisé ! 🎉</span>
-                        </div>
-                    `;
-                } else if (noteRequiseEpreuves > 20) {
-                    row.innerHTML = `
-                        <div class="mention-top-bar">
-                            <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
-                            <span class="mention-diff-lbl diff-locked">Inaccessible</span>
-                        </div>
-                    `;
+                // Si l'utilisateur a écrit des notes réelles dans l'onglet Examen
+                if (aDesNotesExam) {
+                    if (moyenneFinaleActuelle >= seuil.valeur) {
+                        row.classList.add('unlocked');
+                        row.innerHTML = `
+                            <div class="mention-top-bar">
+                                <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
+                                <span class="mention-diff-lbl diff-unlocked">Atteint ! 🎉</span>
+                            </div>
+                        `;
+                    } else {
+                        row.innerHTML = `
+                            <div class="mention-top-bar">
+                                <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
+                                <span class="mention-diff-lbl diff-locked">Insuffisant actuellement</span>
+                            </div>
+                        `;
+                    }
                 } else {
-                    row.innerHTML = `
-                        <div class="mention-top-bar">
-                            <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
-                            <span class="mention-diff-lbl diff-locked">Examen requis : <b>${arrondir(noteRequiseEpreuves).toFixed(2)}/20</b></span>
-                        </div>
-                    `;
+                    // Mode simulation pure (calcul de la note d'examen globale requise)
+                    const noteRequiseEpreuves = (seuil.valeur - pointsAcquisCC) / 0.6;
+
+                    if (noteRequiseEpreuves <= 0) {
+                        row.classList.add('unlocked');
+                        row.innerHTML = `
+                            <div class="mention-top-bar">
+                                <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
+                                <span class="mention-diff-lbl diff-unlocked">Sécurisé ! 🎉</span>
+                            </div>
+                        `;
+                    } else if (noteRequiseEpreuves > 20) {
+                        row.innerHTML = `
+                            <div class="mention-top-bar">
+                                <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
+                                <span class="mention-diff-lbl diff-locked">Inaccessible</span>
+                            </div>
+                        `;
+                    } else {
+                        row.innerHTML = `
+                            <div class="mention-top-bar">
+                                <div class="mention-title-lbl"><span>${seuil.emoji}</span>${seuil.nom} (${seuil.valeur}/20)</div>
+                                <span class="mention-diff-lbl diff-locked">Moyenne exam requise : <b>${arrondir(noteRequiseEpreuves).toFixed(2)}/20</b></span>
+                            </div>
+                        `;
+                    }
                 }
                 zone.appendChild(row);
             });
