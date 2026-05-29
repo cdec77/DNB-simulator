@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulateur DNB 2026 - Lumineux</title>
+    <title>Simulateur DNB 2026 - Lumineux & Fun</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512x512.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --neon-blue: #0077ff;
@@ -29,7 +33,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Fredoka', system-ui, -apple-system, sans-serif;
             background-color: var(--dark-bg);
             color: var(--text-color);
             height: 100vh;
@@ -39,6 +43,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
         }
 
         .container {
@@ -53,49 +58,58 @@
             flex-direction: column;
             gap: 6px;
             border: 1px solid var(--border-color);
+            position: relative;
         }
 
         .header-area {
             text-align: center;
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
+        /* STYLE DU TITRE PRINCIPAL (POLICE OUTFIT) */
         h1 {
+            font-family: 'Outfit', sans-serif;
             color: #0f172a;
-            font-size: 1.15em;
-            font-weight: 800;
-            text-shadow: 0 0 10px rgba(0, 119, 255, 0.2);
+            font-size: 1.35em;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #0f172a 30%, var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 12px rgba(0, 119, 255, 0.15);
         }
 
         .copyright {
             font-size: 0.6em;
             color: #64748b;
+            font-weight: 600;
         }
 
-        /* BOUTON ANNULER ↩️ */
-        .undo-btn {
+        /* ↩️ BOUTON ANNULER FLOTTANT EN BAS À DROITE */
+        .undo-floating-btn {
             position: absolute;
-            right: 4px;
-            top: 2px;
-            background: #f1f5f9;
+            bottom: 25px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background: #ffffff;
             border: 1px solid var(--border-color);
-            padding: 4px 8px;
-            border-radius: 8px;
-            font-size: 0.75em;
-            font-weight: bold;
+            border-radius: 50%;
+            font-size: 1.2em;
             cursor: pointer;
-            color: #475569;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 3px;
-            transition: all 0.2s;
+            z-index: 999;
+            transition: transform 0.1s, background-color 0.1s;
         }
-        .undo-btn:active {
-            background: #e2e8f0;
-            transform: scale(0.95);
+        .undo-floating-btn:active {
+            transform: scale(0.9);
+            background-color: #f1f5f9;
         }
 
         .install-btn {
@@ -133,8 +147,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.75em;
-            text-transform: uppercase;
+            font-size: 0.78em;
             font-weight: 700;
         }
 
@@ -143,12 +156,13 @@
         .score-label-generale { color: var(--neon-green); font-weight: bold; }
 
         .score-number {
+            font-family: 'Outfit', sans-serif;
             font-weight: 800;
-            font-size: 0.95em;
+            font-size: 1em;
         }
 
         .score-row.main-score .score-number {
-            font-size: 1.15em;
+            font-size: 1.25em;
             color: var(--neon-green);
             text-shadow: 0 0 6px rgba(0, 179, 0, 0.2);
         }
@@ -187,8 +201,8 @@
             cursor: pointer;
             border-radius: 7px;
             color: #64748b;
-            font-size: 0.72em;
-            font-weight: bold;
+            font-size: 0.75em;
+            font-weight: 700;
             white-space: nowrap;
             transition: all 0.2s;
         }
@@ -235,7 +249,7 @@
 
         .item-label {
             font-weight: 600;
-            font-size: 0.78em;
+            font-size: 0.8em;
             color: #334155;
             white-space: nowrap;
             overflow: hidden;
@@ -252,12 +266,13 @@
         }
 
         .inputs-group input {
+            font-family: 'Fredoka', sans-serif;
             width: 36px;
             height: 25px;
             border: 1px solid #cbd5e1;
             border-radius: 5px;
             text-align: center;
-            font-size: 0.78em;
+            font-size: 0.8em;
             font-weight: bold;
             background-color: white;
             color: #0f172a;
@@ -271,16 +286,18 @@
         }
 
         .card-moyenne {
+            font-family: 'Outfit', sans-serif;
             text-align: right;
             font-weight: 800;
             color: var(--neon-green);
-            font-size: 0.78em;
+            font-size: 0.8em;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
         .bonus-lbl {
+            font-family: 'Fredoka', sans-serif;
             font-size: 0.7em;
             color: var(--neon-yellow);
             font-weight: bold;
@@ -305,7 +322,7 @@
             border-bottom: 1px solid rgba(0,0,0,0.02);
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 5px;
             margin-bottom: 6px;
         }
 
@@ -322,6 +339,7 @@
         }
 
         .flash-row input {
+            font-family: 'Fredoka', sans-serif;
             width: 80px;
             height: 26px;
             border: 1px solid var(--neon-yellow);
@@ -334,13 +352,15 @@
             outline: none;
         }
 
+        /* POLICE DU TITRE DE SECTIONS */
         .section-title {
-            font-size: 0.7em;
-            color: #64748b;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.75em;
+            color: #475569;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin: 5px 0 3px 0;
-            font-weight: 700;
+            letter-spacing: 0.8px;
+            margin: 6px 0 3px 0;
+            font-weight: 800;
         }
 
         .mentions-grid {
@@ -367,7 +387,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.78em;
+            font-size: 0.8em;
         }
 
         .mention-title-lbl {
@@ -379,12 +399,13 @@
         }
 
         .mention-diff-lbl {
+            font-family: 'Outfit', sans-serif;
             font-size: 0.85em;
-            font-weight: bold;
+            font-weight: 800;
         }
 
         .diff-locked { color: #dc2626; }
-        .diff-unlocked { color: var(--neon-green); font-weight: 800; }
+        .diff-unlocked { color: var(--neon-green); font-weight: 900; }
 
         .footer {
             text-align: center;
@@ -393,16 +414,18 @@
             margin-top: auto;
             padding-top: 4px;
             border-top: 1px solid var(--border-color);
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
     <div class="container">
         
+        <button class="undo-floating-btn" onclick="triggerUndo()" title="Annuler la saisie">↩️</button>
+
         <div class="header-area">
             <h1>📊 Simulateur DNB 2026</h1>
             <div class="copyright">© c dc - Tous droits réservés</div>
-            <button class="undo-btn" onclick="triggerUndo()">↩️ Annuler</button>
             <button class="install-btn" id="pwa-install-btn">📲 Installer</button>
         </div>
 
@@ -442,7 +465,11 @@
             <div class="flash-box">
                 <div class="flash-row">
                     <label>📝 Moyenne Globale CC :</label>
-                    <input type="number" id="flash-cc-input" step="any" min="0" max="20" placeholder="Note/20" oninput="saveState(); validateInput(this); updateFlash()">
+                    <input type="number" id="flash-cc-input" step="any" min="0" max="20" placeholder="Note/20" oninput="saveState(); validateInput(this); triggerFlashUpdate()">
+                </div>
+                <div class="flash-row" style="margin-top: 4px; border-top: 1px dashed rgba(0,0,0,0.06); padding-top: 4px;">
+                    <label>📜 Note de Latin (Option) :</label>
+                    <input type="number" id="flash-latin-input" step="any" min="0" max="20" placeholder="Vide = 10" oninput="saveState(); validateInput(this); triggerFlashUpdate()">
                 </div>
             </div>
             <div class="section-title">🏆 Objectifs Épreuves (Pondération 60%)</div>
@@ -455,9 +482,9 @@
             <div class="item-grid" style="border-left-color: var(--neon-yellow);">
                 <div class="item-label">📜 Latin</div>
                 <div class="inputs-group">
-                    <input type="number" id="latin-t1" step="any" min="0" max="20" placeholder="T1" oninput="saveState(); validateInput(this); updateAll()">
-                    <input type="number" id="latin-t2" step="any" min="0" max="20" placeholder="T2" oninput="saveState(); validateInput(this); updateAll()">
-                    <input type="number" id="latin-t3" step="any" min="0" max="20" placeholder="T3" oninput="saveState(); validateInput(this); updateAll()">
+                    <input type="number" id="latin-t1" step="any" min="0" max="20" placeholder="T1" oninput="saveState(); validateInput(this); syncLatinFromDetail(); updateAll()">
+                    <input type="number" id="latin-t2" step="any" min="0" max="20" placeholder="T2" oninput="saveState(); validateInput(this); syncLatinFromDetail(); updateAll()">
+                    <input type="number" id="latin-t3" step="any" min="0" max="20" placeholder="T3" oninput="saveState(); validateInput(this); syncLatinFromDetail(); updateAll()">
                 </div>
                 <div class="card-moyenne">
                     <span id="latin-moyenne">-</span>
@@ -488,9 +515,9 @@
         let deferredPrompt;
         const installBtn = document.getElementById('pwa-install-btn');
         let historyStack = [];
-        let highMentionUnlocked = [false, false, false, false, false]; // dnb, ab, b, tb, felic
+        let highMentionUnlocked = [false, false, false, false, false]; 
+        let isSyncing = false; 
 
-        // Moteur Audio Web Intégré
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         
         function playTone(freq, type, duration) {
@@ -499,7 +526,7 @@
                 const gainNode = audioCtx.createGain();
                 osc.type = type;
                 osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gainNode.gain.setValueAtTime(0.06, audioCtx.currentTime);
                 gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
                 osc.connect(gainNode);
                 gainNode.connect(audioCtx.destination);
@@ -515,7 +542,6 @@
             setTimeout(() => playTone(783.99, 'triangle', 0.2), 160);
         }
 
-        // Sauvegarde d'état pour bouton Annuler
         function saveState() {
             const inputs = document.querySelectorAll('input[type="number"]');
             const state = {};
@@ -528,7 +554,7 @@
 
         function triggerUndo() {
             if (historyStack.length > 1) {
-                historyStack.pop(); // Retire l'état actuel
+                historyStack.pop();
                 const prevState = historyStack[historyStack.length - 1];
                 for (let id in prevState) {
                     const input = document.getElementById(id);
@@ -539,28 +565,6 @@
                 updateFlash();
             }
         }
-
-        const isIos = () => /iPhone|iPad|iPod/i.test(navigator.userAgent) && !window.MSStream;
-        const isSafari = () => /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault(); deferredPrompt = e; installBtn.style.display = 'block';
-        });
-
-        if (isIos() && isSafari() && !window.navigator.standalone) {
-            installBtn.style.display = 'block'; installBtn.textContent = "📲 Installer via Safari";
-        }
-
-        installBtn.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') installBtn.style.display = 'none';
-                deferredPrompt = null;
-            } else if (isIos()) {
-                alert("Pour installer sur iPhone :\n1. Bouton de partage Safari.\n2. 'Sur l'écran d'accueil'.");
-            }
-        });
 
         const matieresObligatoires = [
             { id: 'francais', nom: 'Français', ico: '✍️' }, { id: 'maths', nom: 'Maths', ico: '📐' },
@@ -611,11 +615,6 @@
                         e.preventDefault(); if (inputs[index + 1]) inputs[index + 1].focus();
                     }
                 });
-                input.addEventListener('input', () => {
-                    if (parseFloat(input.value) === 20) {
-                        if (inputs[index + 1]) inputs[index + 1].focus();
-                    }
-                });
             });
         }
 
@@ -655,6 +654,42 @@
             });
         }
 
+        function triggerFlashUpdate() {
+            if (isSyncing) return;
+            isSyncing = true;
+
+            const rawCC = document.getElementById('flash-cc-input').value;
+            const rawLatin = document.getElementById('flash-latin-input').value;
+            
+            if (rawCC !== "") {
+                matieresObligatoires.forEach(matiere => {
+                    document.getElementById(`${matiere.id}-t1`).value = rawCC;
+                    document.getElementById(`${matiere.id}-t2`).value = "";
+                    document.getElementById(`${matiere.id}-t3`).value = "";
+                });
+            }
+
+            if (rawLatin !== "") {
+                document.getElementById('latin-t1').value = rawLatin;
+                document.getElementById('latin-t2').value = "";
+                document.getElementById('latin-t3').value = "";
+            } else {
+                document.getElementById('latin-t1').value = "";
+                document.getElementById('latin-t2').value = "";
+                document.getElementById('latin-t3').value = "";
+            }
+
+            isSyncing = false;
+            updateAll();
+            updateFlash();
+        }
+
+        function syncLatinFromDetail() {
+            if (isSyncing) return;
+            const moyenneLatin = calculerMoyenneMatiere('latin');
+            document.getElementById('flash-latin-input').value = moyenneLatin !== null ? arrondir(moyenneLatin) : "";
+        }
+
         function updateAll() {
             let sommeMatières = 0, matieresComptees = 0;
             
@@ -668,23 +703,31 @@
                 }
             });
 
-            const moyenneLatin = calculerMoyenneMatiere('latin');
+            let moyenneLatin = calculerMoyenneMatiere('latin');
+            if (moyenneLatin === null) {
+                const flashLatinRaw = document.getElementById('flash-latin-input').value;
+                moyenneLatin = flashLatinRaw !== "" ? parseFloat(flashLatinRaw) : 10; 
+            }
+            
             const bonusElement = document.getElementById('latin-bonus');
             let pointsLatin = 0;
 
-            if (moyenneLatin !== null) {
+            if (moyenneLatin > 10) {
+                pointsLatin = moyenneLatin - 10;
+                bonusElement.textContent = `+${arrondir(pointsLatin).toFixed(2)}`;
                 document.getElementById('latin-moyenne').textContent = arrondir(moyenneLatin).toFixed(2);
-                if (moyenneLatin > 10) {
-                    pointsLatin = moyenneLatin - 10;
-                    bonusElement.textContent = `+${arrondir(pointsLatin).toFixed(2)}`;
-                } else { bonusElement.textContent = `+0.00`; }
-            } else {
-                document.getElementById('latin-moyenne').textContent = '-'; bonusElement.textContent = '';
+            } else { 
+                bonusElement.textContent = `+0.00`;
+                document.getElementById('latin-moyenne').textContent = moyenneLatin === 10 && document.getElementById('latin-t1').value === "" ? "-" : arrondir(moyenneLatin).toFixed(2);
             }
 
             const moyenneCC = matieresComptees > 0 ? Math.min((sommeMatières + pointsLatin) / matieresComptees, 20) : 0;
             document.getElementById('cc-score').textContent = `${arrondir(moyenneCC).toFixed(2)}/20`;
             document.getElementById('cc-progress').style.width = `${(moyenneCC / 20) * 100}%`;
+
+            if (!isSyncing) {
+                document.getElementById('flash-cc-input').value = matieresComptees > 0 ? arrondir(moyenneCC) : "";
+            }
 
             const finalFields = ['francais-final', 'maths-final', 'histoire-final', 'sciences-final', 'oral-final'];
             let notesFinales = [];
@@ -702,6 +745,7 @@
 
             checkAudioTriggers(moyenneFinale);
             renderMentions(moyenneFinale, 'mentions-zone');
+            updateFlash();
         }
 
         function updateFlash() {
@@ -710,14 +754,18 @@
             zone.innerHTML = '';
 
             if (rawCC === "") {
-                zone.innerHTML = '<div style="font-size:0.8em; color:#64748b; text-align:center; padding:10px;">Entrez votre moyenne continue pour simuler.</div>';
+                zone.innerHTML = '<div style="font-size:0.8em; color:#64748b; text-align:center; padding:10px; font-weight: 600;">Entrez votre moyenne continue pour simuler.</div>';
                 return;
             }
 
             const ccScore = parseFloat(rawCC);
-            const pointsAcquisCC = ccScore * 0.4;
+            const rawLatin = document.getElementById('flash-latin-input').value;
+            const latVal = rawLatin !== "" ? parseFloat(rawLatin) : 10;
+            const bonusLatFlash = latVal > 10 ? (latVal - 10) : 0;
 
-            seuils.forEach((seuil, idx) => {
+            const pointsAcquisCC = Math.min(((ccScore * 12) + bonusLatFlash) / 12, 20) * 0.4;
+
+            seuils.forEach((seuil) => {
                 const noteRequiseEpreuves = (seuil.valeur - pointsAcquisCC) / 0.6;
                 const row = document.createElement('div');
                 row.className = 'mention-row-ui';
@@ -780,9 +828,8 @@
 
         window.onload = function() {
             generateMatièresList();
-            saveState(); // Initialise la première capture
+            saveState(); 
             updateAll();
-            updateFlash();
         };
     </script>
 </body>
