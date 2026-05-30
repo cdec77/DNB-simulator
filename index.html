@@ -35,7 +35,6 @@
         body {
             font-family: 'Fredoka', system-ui, -apple-system, sans-serif;
             background-color: var(--dark-bg);
-            color: var(--text-color);
             min-height: 100vh;
             min-height: 100dvh;
             padding: 10px;
@@ -45,18 +44,17 @@
             position: relative;
         }
 
-        /* 3) ADAPTATION PLEIN ÉCRAN SUR PC ET FLUIDE SUR MOBILE */
         .container {
             width: 100%;
-            max-width: 1200px; /* S'élargit sur ordinateur */
+            max-width: 1200px;
             min-height: calc(100vh - 20px);
             background-color: var(--light-bg);
             border-radius: 20px;
-            padding: 16px;
+            padding: 18px;
             box-shadow: 0 10px 30px rgba(0, 119, 255, 0.08);
             display: flex;
             flex-direction: column;
-            gap: 12px; /* Plus aéré */
+            gap: 14px;
             border: 1px solid var(--border-color);
             position: relative;
         }
@@ -72,7 +70,7 @@
         h1 {
             font-family: 'Fredoka', sans-serif;
             font-weight: 900;
-            font-size: 1.8em; /* Plus grand */
+            font-size: 2.1em; /* Police agrandie */
             color: #ffffff;
             letter-spacing: -0.5px;
             text-transform: uppercase;
@@ -85,13 +83,12 @@
         }
 
         .copyright {
-            font-size: 0.7em;
+            font-size: 0.8em; /* Agrandie */
             color: #64748b;
             font-weight: 600;
             margin-top: 4px;
         }
 
-        /* 1) BOUTONS FLOTTANTS ACTION */
         .floating-actions-group {
             position: fixed;
             bottom: 25px;
@@ -102,10 +99,10 @@
         }
 
         .action-btn {
-            width: 46px;
-            height: 46px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            font-size: 1.3em;
+            font-size: 1.4em;
             cursor: pointer;
             display: flex;
             justify-content: center;
@@ -135,38 +132,37 @@
             background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
             color: white;
             border: none;
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 14px;
-            font-size: 0.8em;
+            font-size: 0.9em;
             font-weight: bold;
             margin-top: 6px;
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0, 119, 255, 0.2);
         }
 
-        /* 2) INTERFACE PLUS VISUELLE ET AÉRÉE */
         .score-sticky-box {
             background: #f8fafc;
             border: 1px solid rgba(0, 119, 255, 0.25);
             border-radius: 14px;
-            padding: 12px;
+            padding: 14px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
             box-shadow: inset 0 0 10px rgba(0, 119, 255, 0.02);
         }
 
         .score-row {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 5px;
         }
 
         .score-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.88rem; /* Plus lisible */
+            font-size: 1.05rem; /* Agrandie */
             font-weight: 700;
         }
 
@@ -176,11 +172,11 @@
 
         .score-number {
             font-weight: 900;
-            font-size: 1.05rem;
+            font-size: 1.2rem; /* Agrandie */
         }
 
         .score-row.main-score .score-number {
-            font-size: 1.4rem;
+            font-size: 1.6rem; /* Agrandie */
             color: var(--neon-green);
             text-shadow: 0 0 6px rgba(0, 179, 0, 0.15);
         }
@@ -188,7 +184,7 @@
         .progress-container {
             background-color: #e2e8f0;
             border-radius: 6px;
-            height: 8px; /* Plus épais */
+            height: 10px; /* Plus visible */
             width: 100%;
             overflow: hidden;
         }
@@ -218,11 +214,11 @@
         .tab {
             flex: 1 1 0%;
             text-align: center;
-            padding: 10px 4px; /* Plus haut */
+            padding: 12px 4px;
             cursor: pointer;
             border-radius: 8px;
             color: #64748b;
-            font-size: clamp(0.75rem, 3vw, 0.88rem); /* Police agrandie */
+            font-size: clamp(0.85rem, 3.5vw, 1rem); /* Agrandie */
             font-weight: 700;
             transition: all 0.2s;
         }
@@ -242,11 +238,10 @@
             display: block;
         }
 
-        /* Structure en grille adaptative : 1 colonne sur mobile, 2 ou 3 colonnes sur grand écran ordinateur */
         .cards-list {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 8px;
+            gap: 10px;
         }
 
         @media (min-width: 768px) {
@@ -262,22 +257,19 @@
 
         .item-grid {
             display: grid;
-            grid-template-columns: 1fr 140px 52px;
+            grid-template-columns: 1fr 150px 60px; /* Ajusté */
             align-items: center;
             background-color: var(--card-bg);
-            padding: 10px 12px; /* Grandement espacé */
+            padding: 12px 14px;
             border-radius: 12px;
             border-left: 4px solid var(--neon-purple);
-            border-top: 1px solid rgba(0,0,0,0.01);
-            border-bottom: 1px solid rgba(0,0,0,0.01);
-            border-right: 1px solid rgba(0,0,0,0.01);
-            gap: 6px;
+            gap: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
         .item-label {
             font-weight: 700;
-            font-size: 0.92em;
+            font-size: 1.05em; /* Agrandie */
             color: #334155;
             display: flex;
             align-items: center;
@@ -286,18 +278,18 @@
 
         .inputs-group {
             display: flex;
-            gap: 5px;
+            gap: 6px;
             justify-content: center;
         }
 
         .inputs-group input {
             font-family: 'Fredoka', sans-serif;
-            width: 42px; /* Plus large pour le tactile mobile */
-            height: 32px; /* Plus haut */
+            width: 46px; /* Agrandie */
+            height: 36px; /* Agrandie */
             border: 1px solid #cbd5e1;
             border-radius: 6px;
             text-align: center;
-            font-size: 0.9em;
+            font-size: 1em; /* Agrandie */
             font-weight: bold;
             background-color: white;
             color: #0f172a;
@@ -314,37 +306,37 @@
             text-align: right;
             font-weight: 900;
             color: var(--neon-green);
-            font-size: 0.92em;
+            font-size: 1.05em; /* Agrandie */
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
         .bonus-lbl {
-            font-size: 0.72em;
+            font-size: 0.78em; /* Agrandie */
             color: var(--neon-yellow);
             font-weight: bold;
         }
 
         .epreuve-grid {
-            grid-template-columns: 1fr 80px;
+            grid-template-columns: 1fr 90px;
             border-left-color: var(--neon-blue);
         }
         
         .epreuve-grid .inputs-group input {
-            width: 70px;
-            height: 34px;
+            width: 80px;
+            height: 38px;
         }
 
         .flash-box {
             background-color: var(--card-bg);
-            padding: 14px;
+            padding: 16px;
             border-radius: 12px;
             border-left: 4px solid var(--neon-yellow);
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 12px;
+            gap: 12px;
+            margin-bottom: 14px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
@@ -355,38 +347,38 @@
         }
 
         .flash-row label {
-            font-size: 0.92em;
+            font-size: 1.05em; /* Agrandie */
             font-weight: bold;
             color: #475569;
         }
 
         .flash-row input {
             font-family: 'Fredoka', sans-serif;
-            width: 100px;
-            height: 34px;
+            width: 110px;
+            height: 38px;
             border: 1px solid var(--neon-yellow);
             border-radius: 6px;
             background: white;
             color: #0f172a;
             text-align: center;
-            font-size: 0.95em;
+            font-size: 1.05em; /* Agrandie */
             font-weight: bold;
             outline: none;
         }
 
         .section-title {
-            font-size: 0.82em;
+            font-size: 0.9em; /* Agrandie */
             color: #475569;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            margin: 14px 0 6px 0;
+            margin: 16px 0 8px 0;
             font-weight: 900;
         }
 
         .mentions-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 6px;
+            gap: 8px;
         }
 
         @media (min-width: 768px) {
@@ -399,7 +391,7 @@
             background-color: #f8fafc;
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            padding: 10px 14px;
+            padding: 12px 16px;
             display: flex;
             flex-direction: column;
             gap: 4px;
@@ -419,7 +411,7 @@
         }
 
         .mention-title-lbl {
-            font-size: 0.85em;
+            font-size: 0.95em; /* Agrandie */
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -428,7 +420,7 @@
         }
 
         .mention-diff-lbl {
-            font-size: 0.9em;
+            font-size: 1em; /* Agrandie */
             font-weight: 900;
         }
 
@@ -438,9 +430,9 @@
         .footer {
             text-align: center;
             color: #94a3b8;
-            font-size: 0.65em;
+            font-size: 0.75em; /* Agrandie */
             margin-top: auto;
-            padding-top: 10px;
+            padding-top: 12px;
             border-top: 1px solid var(--border-color);
             font-weight: 600;
         }
@@ -463,7 +455,7 @@
         <div class="score-sticky-box">
             <div class="score-row">
                 <div class="score-header">
-                    <span class="score-label-cc">🟣 Contrôle Continu (40%)</span>
+                    <span class="score-label-cc">🏫 Contrôle Continu (40%)</span>
                     <span class="score-number" id="cc-score">0.00/20</span>
                 </div>
                 <div class="progress-container"><div class="progress-bar cc" id="cc-progress"></div></div>
@@ -471,18 +463,18 @@
 
             <div class="score-row">
                 <div class="score-header">
-                    <span class="score-label-epreuves">💗 Épreuves Finales (60%)</span>
+                    <span class="score-label-epreuves">✍️ Épreuves Finales (60%)</span>
                     <span class="score-number" id="epreuves-score">0.00/20</span>
                 </div>
                 <div class="progress-container"><div class="progress-bar epreuves" id="epreuves-progress"></div></div>
             </div>
 
-            <div class="score-row main-score" style="border-top: 1px solid var(--border-color); padding-top: 4px;">
+            <div class="score-row main-score" style="border-top: 1px solid var(--border-color); padding-top: 6px;">
                 <div class="score-header">
-                    <span class="score-label-generale">💚 Moyenne Générale</span>
+                    <span class="score-label-generale">📜 Moyenne Générale</span>
                     <span class="score-number" id="global-score">0.00/20</span>
                 </div>
-                <div class="progress-container" style="height: 8px;"><div class="progress-bar generale" id="main-progress"></div></div>
+                <div class="progress-container" style="height: 10px;"><div class="progress-bar generale" id="main-progress"></div></div>
             </div>
         </div>
 
@@ -496,11 +488,11 @@
             <div class="flash-box">
                 <div class="flash-row">
                     <label>📝 Moyenne Globale CC :</label>
-                    <input type="text" inputmode="decimal" id="flash-cc-input" placeholder="Ex: 14.5" oninput="saveState(); sanitizeDecimalInput(this); triggerFlashUpdate()">
+                    <input type="text" inputmode="decimal" id="flash-cc-input" placeholder="Ex: 14.5" oninput="saveState(); sanitizeDecimalInput(this); triggerFlashUpdate(); checkAutoBlur(this);">
                 </div>
                 <div class="flash-row" style="margin-top: 4px; border-top: 1px dashed rgba(0,0,0,0.06); padding-top: 6px;">
                     <label>📜 Note de Latin (Option) :</label>
-                    <input type="text" inputmode="decimal" id="flash-latin-input" placeholder="Vide = 10" oninput="saveState(); sanitizeDecimalInput(this); triggerFlashUpdate()">
+                    <input type="text" inputmode="decimal" id="flash-latin-input" placeholder="Vide = 10" oninput="saveState(); sanitizeDecimalInput(this); triggerFlashUpdate(); checkAutoBlur(this);">
                 </div>
             </div>
             <div class="section-title">🏆 Objectifs Épreuves (Pondération 60%)</div>
@@ -596,7 +588,6 @@
             }
         }
 
-        // 1) FONCTION DE REMISE À ZÉRO TOTALE
         function triggerReset() {
             if (confirm("Voulez-vous vraiment remettre à zéro toutes les notes saisies ?")) {
                 const inputs = document.querySelectorAll('input');
@@ -606,6 +597,17 @@
                 playTone(180, 'sawtooth', 0.2);
                 saveState();
                 updateAll();
+            }
+        }
+
+        // Fermeture intelligente du clavier mobile après saisie complète dans le mode Flash
+        function checkAutoBlur(input) {
+            const val = input.value;
+            // Si la valeur est complète (ex: deux chiffres, ou contient un point suivi d'un chiffre)
+            if (val.length >= 4 || (val.includes('.') && val.split('.')[1].length >= 1) || parseFloat(val) >= 20 || (val.length >= 2 && !val.includes('.'))) {
+                setTimeout(() => {
+                    input.blur();
+                }, 400); // Léger délai pour le confort visuel de frappe
             }
         }
 
@@ -811,7 +813,7 @@
             zone.innerHTML = '';
 
             if (rawCC === "" && ccScore === 0) {
-                zone.innerHTML = '<div style="font-size:0.85em; color:#64748b; text-align:center; padding:15px; font-weight: 600;">Entrez votre moyenne continue pour simuler.</div>';
+                zone.innerHTML = '<div style="font-size:0.95em; color:#64748b; text-align:center; padding:15px; font-weight: 600;">Entrez votre moyenne continue pour simuler.</div>';
                 return;
             }
 
