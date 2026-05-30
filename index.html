@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulateur DNB 2026</title>
+    <title>Simulateur DNB 2026 - Lumineux & Fun</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512x512.png">
@@ -36,27 +36,27 @@
             font-family: 'Fredoka', system-ui, -apple-system, sans-serif;
             background-color: var(--dark-bg);
             color: var(--text-color);
-            height: 100vh;
-            height: 100dvh;
-            overflow: hidden;
-            padding: 6px;
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding: 10px;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             position: relative;
         }
 
+        /* 3) ADAPTATION PLEIN ÉCRAN SUR PC ET FLUIDE SUR MOBILE */
         .container {
             width: 100%;
-            max-width: 420px;
-            height: 100%;
+            max-width: 1200px; /* S'élargit sur ordinateur */
+            min-height: calc(100vh - 20px);
             background-color: var(--light-bg);
-            border-radius: 16px;
-            padding: 10px;
-            box-shadow: 0 10px 25px rgba(0, 119, 255, 0.1);
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: 0 10px 30px rgba(0, 119, 255, 0.08);
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 12px; /* Plus aéré */
             border: 1px solid var(--border-color);
             position: relative;
         }
@@ -66,55 +66,68 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-bottom: 2px;
+            padding-bottom: 4px;
         }
 
-        /* TITRE REDRESSÉ (SANS ROTATION) & STYLE CARTOON CONSERVÉ */
         h1 {
             font-family: 'Fredoka', sans-serif;
             font-weight: 900;
-            font-size: 1.5em;
+            font-size: 1.8em; /* Plus grand */
             color: #ffffff;
             letter-spacing: -0.5px;
             text-transform: uppercase;
-            /* Effet dégradé flashy */
             background: linear-gradient(135deg, #2563eb, #00d2ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            /* Multi-ombres pour créer un contour 3D type BD / Cartoon */
-            filter: drop-shadow(2px 2px 0px rgba(15, 23, 42, 0.15));
-            transform: none; /* Titre parfaitement droit */
+            filter: drop-shadow(2px 2px 0px rgba(15, 23, 42, 0.12));
+            transform: none;
             margin-top: 2px;
         }
 
         .copyright {
-            font-size: 0.6em;
+            font-size: 0.7em;
             color: #64748b;
             font-weight: 600;
-            margin-top: 2px;
+            margin-top: 4px;
         }
 
-        .undo-floating-btn {
-            position: absolute;
+        /* 1) BOUTONS FLOTTANTS ACTION */
+        .floating-actions-group {
+            position: fixed;
             bottom: 25px;
-            right: 15px;
-            width: 40px;
-            height: 40px;
-            background: #ffffff;
-            border: 1px solid var(--border-color);
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 9999;
+        }
+
+        .action-btn {
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
-            font-size: 1.2em;
+            font-size: 1.3em;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 999;
-            transition: transform 0.1s, background-color 0.1s;
+            transition: transform 0.1s, background-color 0.1s, box-shadow 0.2s;
+            border: none;
         }
-        .undo-floating-btn:active {
+        
+        .reset-btn {
+            background: #ef4444;
+            color: white;
+            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+        }
+
+        .undo-btn {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+        }
+
+        .action-btn:active {
             transform: scale(0.9);
-            background-color: #f1f5f9;
         }
 
         .install-btn {
@@ -122,59 +135,60 @@
             background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
             color: white;
             border: none;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.75em;
+            padding: 6px 14px;
+            border-radius: 14px;
+            font-size: 0.8em;
             font-weight: bold;
-            margin-top: 4px;
+            margin-top: 6px;
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0, 119, 255, 0.2);
         }
 
+        /* 2) INTERFACE PLUS VISUELLE ET AÉRÉE */
         .score-sticky-box {
             background: #f8fafc;
-            border: 1px solid rgba(0, 119, 255, 0.3);
-            border-radius: 10px;
-            padding: 6px 8px;
+            border: 1px solid rgba(0, 119, 255, 0.25);
+            border-radius: 14px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 4px;
-            box-shadow: inset 0 0 8px rgba(0, 119, 255, 0.03);
+            gap: 8px;
+            box-shadow: inset 0 0 10px rgba(0, 119, 255, 0.02);
         }
 
         .score-row {
             display: flex;
             flex-direction: column;
-            gap: 1px;
+            gap: 4px;
         }
 
         .score-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.78em;
+            font-size: 0.88rem; /* Plus lisible */
             font-weight: 700;
         }
 
         .score-label-cc { color: var(--neon-purple); }
         .score-label-epreuves { color: var(--neon-pink); }
-        .score-label-generale { color: var(--neon-green); font-weight: bold; }
+        .score-label-generale { color: var(--neon-green); font-weight: 900; }
 
         .score-number {
             font-weight: 900;
-            font-size: 1em;
+            font-size: 1.05rem;
         }
 
         .score-row.main-score .score-number {
-            font-size: 1.25em;
+            font-size: 1.4rem;
             color: var(--neon-green);
-            text-shadow: 0 0 6px rgba(0, 179, 0, 0.2);
+            text-shadow: 0 0 6px rgba(0, 179, 0, 0.15);
         }
 
         .progress-container {
             background-color: #e2e8f0;
-            border-radius: 4px;
-            height: 5px;
+            border-radius: 6px;
+            height: 8px; /* Plus épais */
             width: 100%;
             overflow: hidden;
         }
@@ -185,104 +199,105 @@
             transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .progress-bar.cc { background: var(--neon-purple); box-shadow: 0 0 6px rgba(121, 40, 202, 0.4); }
-        .progress-bar.epreuves { background: var(--neon-pink); box-shadow: 0 0 6px rgba(255, 0, 127, 0.4); }
-        .progress-bar.generale { background: var(--neon-green); box-shadow: 0 0 6px rgba(0, 179, 0, 0.4); }
+        .progress-bar.cc { background: var(--neon-purple); }
+        .progress-bar.epreuves { background: var(--neon-pink); }
+        .progress-bar.generale { background: var(--neon-green); }
 
         .tabs {
             display: flex;
             justify-content: center;
             align-items: center;
             background-color: #f1f5f9;
-            padding: 4px;
-            border-radius: 10px;
-            gap: 4px;
+            padding: 6px;
+            border-radius: 12px;
+            gap: 6px;
             border: 1px solid var(--border-color);
             width: 100%;
         }
 
         .tab {
             flex: 1 1 0%;
-            min-width: 0;
             text-align: center;
-            padding: 8px 2px;
+            padding: 10px 4px; /* Plus haut */
             cursor: pointer;
-            border-radius: 7px;
+            border-radius: 8px;
             color: #64748b;
-            font-size: clamp(0.65rem, 2.5vw, 0.75rem);
+            font-size: clamp(0.75rem, 3vw, 0.88rem); /* Police agrandie */
             font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
             transition: all 0.2s;
         }
 
         .tab.active {
             background-color: white;
             color: var(--neon-blue);
-            box-shadow: 0 2px 8px rgba(0, 119, 255, 0.15);
+            box-shadow: 0 3px 10px rgba(0, 119, 255, 0.12);
         }
 
         .tab-content {
             display: none;
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 2px;
+            width: 100%;
         }
 
         .tab-content.active {
             display: block;
         }
 
-        .tab-content::-webkit-scrollbar { width: 4px; }
-        .tab-content::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
-
+        /* Structure en grille adaptative : 1 colonne sur mobile, 2 ou 3 colonnes sur grand écran ordinateur */
         .cards-list {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .cards-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 1024px) {
+            .cards-list {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         .item-grid {
             display: grid;
-            grid-template-columns: 1fr 124px 46px;
+            grid-template-columns: 1fr 140px 52px;
             align-items: center;
             background-color: var(--card-bg);
-            padding: 5px 6px;
-            border-radius: 8px;
-            border-left: 3px solid var(--neon-purple);
-            border-top: 1px solid rgba(0,0,0,0.02);
-            border-bottom: 1px solid rgba(0,0,0,0.02);
-            border-right: 1px solid rgba(0,0,0,0.02);
-            gap: 2px;
+            padding: 10px 12px; /* Grandement espacé */
+            border-radius: 12px;
+            border-left: 4px solid var(--neon-purple);
+            border-top: 1px solid rgba(0,0,0,0.01);
+            border-bottom: 1px solid rgba(0,0,0,0.01);
+            border-right: 1px solid rgba(0,0,0,0.01);
+            gap: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
         .item-label {
-            font-weight: 600;
-            font-size: 0.8em;
+            font-weight: 700;
+            font-size: 0.92em;
             color: #334155;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
         }
 
         .inputs-group {
             display: flex;
-            gap: 3px;
+            gap: 5px;
             justify-content: center;
         }
 
         .inputs-group input {
             font-family: 'Fredoka', sans-serif;
-            width: 36px;
-            height: 25px;
+            width: 42px; /* Plus large pour le tactile mobile */
+            height: 32px; /* Plus haut */
             border: 1px solid #cbd5e1;
-            border-radius: 5px;
+            border-radius: 6px;
             text-align: center;
-            font-size: 0.8em;
+            font-size: 0.9em;
             font-weight: bold;
             background-color: white;
             color: #0f172a;
@@ -292,46 +307,45 @@
 
         .inputs-group input:focus {
             border-color: var(--neon-blue);
-            box-shadow: 0 0 5px rgba(0, 119, 255, 0.2);
+            box-shadow: 0 0 6px rgba(0, 119, 255, 0.25);
         }
 
         .card-moyenne {
             text-align: right;
             font-weight: 900;
             color: var(--neon-green);
-            font-size: 0.8em;
+            font-size: 0.92em;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
         .bonus-lbl {
-            font-size: 0.7em;
+            font-size: 0.72em;
             color: var(--neon-yellow);
             font-weight: bold;
         }
 
         .epreuve-grid {
-            grid-template-columns: 1fr 65px;
+            grid-template-columns: 1fr 80px;
             border-left-color: var(--neon-blue);
         }
         
         .epreuve-grid .inputs-group input {
-            width: 60px;
+            width: 70px;
+            height: 34px;
         }
 
         .flash-box {
             background-color: var(--card-bg);
-            padding: 8px;
-            border-radius: 8px;
-            border-left: 3px solid var(--neon-yellow);
-            border-right: 1px solid rgba(0,0,0,0.02);
-            border-top: 1px solid rgba(0,0,0,0.02);
-            border-bottom: 1px solid rgba(0,0,0,0.02);
+            padding: 14px;
+            border-radius: 12px;
+            border-left: 4px solid var(--neon-yellow);
             display: flex;
             flex-direction: column;
-            gap: 5px;
-            margin-bottom: 6px;
+            gap: 10px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
         .flash-row {
@@ -341,52 +355,58 @@
         }
 
         .flash-row label {
-            font-size: 0.8em;
+            font-size: 0.92em;
             font-weight: bold;
             color: #475569;
         }
 
         .flash-row input {
             font-family: 'Fredoka', sans-serif;
-            width: 80px;
-            height: 26px;
+            width: 100px;
+            height: 34px;
             border: 1px solid var(--neon-yellow);
-            border-radius: 5px;
+            border-radius: 6px;
             background: white;
             color: #0f172a;
             text-align: center;
-            font-size: 0.85em;
+            font-size: 0.95em;
             font-weight: bold;
             outline: none;
         }
 
         .section-title {
-            font-size: 0.75em;
+            font-size: 0.82em;
             color: #475569;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            margin: 6px 0 3px 0;
+            margin: 14px 0 6px 0;
             font-weight: 900;
         }
 
         .mentions-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 6px;
+        }
+
+        @media (min-width: 768px) {
+            .mentions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         .mention-row-ui {
             background-color: #f8fafc;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 6px 10px;
+            border-radius: 10px;
+            padding: 10px 14px;
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 4px;
         }
 
         .mention-row-ui.unlocked {
-            border-color: rgba(0, 179, 0, 0.3);
+            border-color: rgba(0, 179, 0, 0.25);
             background-color: rgba(0, 179, 0, 0.04);
         }
 
@@ -394,23 +414,22 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 1px;
+            gap: 2px;
             width: 100%;
         }
 
         .mention-title-lbl {
-            font-size: 0.78em;
+            font-size: 0.85em;
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             color: #475569;
         }
 
         .mention-diff-lbl {
-            font-size: 0.82em;
+            font-size: 0.9em;
             font-weight: 900;
-            margin-top: 1px;
         }
 
         .diff-locked { color: #dc2626; }
@@ -419,9 +438,9 @@
         .footer {
             text-align: center;
             color: #94a3b8;
-            font-size: 0.6em;
+            font-size: 0.65em;
             margin-top: auto;
-            padding-top: 4px;
+            padding-top: 10px;
             border-top: 1px solid var(--border-color);
             font-weight: 600;
         }
@@ -430,11 +449,14 @@
 <body>
     <div class="container">
         
-        <button class="undo-floating-btn" onclick="triggerUndo()" title="Annuler la saisie">↩️</button>
+        <div class="floating-actions-group">
+            <button class="action-btn reset-btn" onclick="triggerReset()" title="Tout remettre à zéro">🔄</button>
+            <button class="action-btn undo-btn" onclick="triggerUndo()" title="Annuler la saisie">↩️</button>
+        </div>
 
         <div class="header-area">
             <h1>📊 Simulateur DNB 2026</h1>
-            <div class="copyright">© Cyrille de Chanteloup - Tous droits réservés</div>
+            <div class="copyright">© c dc - Tous droits réservés</div>
             <button class="install-btn" id="pwa-install-btn">📲 Installer</button>
         </div>
 
@@ -455,12 +477,12 @@
                 <div class="progress-container"><div class="progress-bar epreuves" id="epreuves-progress"></div></div>
             </div>
 
-            <div class="score-row main-score" style="border-top: 1px solid var(--border-color); padding-top: 2px;">
+            <div class="score-row main-score" style="border-top: 1px solid var(--border-color); padding-top: 4px;">
                 <div class="score-header">
                     <span class="score-label-generale">💚 Moyenne Générale</span>
                     <span class="score-number" id="global-score">0.00/20</span>
                 </div>
-                <div class="progress-container" style="height: 6px;"><div class="progress-bar generale" id="main-progress"></div></div>
+                <div class="progress-container" style="height: 8px;"><div class="progress-bar generale" id="main-progress"></div></div>
             </div>
         </div>
 
@@ -473,10 +495,10 @@
         <div id="tab-flash" class="tab-content active">
             <div class="flash-box">
                 <div class="flash-row">
-                    <label>📝 Moyenne Globale Contrôle Continu :</label>
+                    <label>📝 Moyenne Globale CC :</label>
                     <input type="text" inputmode="decimal" id="flash-cc-input" placeholder="Ex: 14.5" oninput="saveState(); sanitizeDecimalInput(this); triggerFlashUpdate()">
                 </div>
-                <div class="flash-row" style="margin-top: 4px; border-top: 1px dashed rgba(0,0,0,0.06); padding-top: 4px;">
+                <div class="flash-row" style="margin-top: 4px; border-top: 1px dashed rgba(0,0,0,0.06); padding-top: 6px;">
                     <label>📜 Note de Latin (Option) :</label>
                     <input type="text" inputmode="decimal" id="flash-latin-input" placeholder="Vide = 10" oninput="saveState(); sanitizeDecimalInput(this); triggerFlashUpdate()">
                 </div>
@@ -488,7 +510,7 @@
         <div id="tab-matieres" class="tab-content">
             <div class="cards-list" id="matières-list"></div>
             <div class="section-title">🏛️ Option Optionnelle</div>
-            <div class="item-grid" style="border-left-color: var(--neon-yellow);">
+            <div class="item-grid" style="border-left-color: var(--neon-yellow); margin-top: 4px;">
                 <div class="item-label">📜 Latin</div>
                 <div class="inputs-group">
                     <input type="number" id="latin-t1" step="any" min="0" max="20" placeholder="T1" oninput="saveState(); validateInput(this); syncLatinFromDetail(); updateAll()">
@@ -516,7 +538,7 @@
         </div>
 
         <div class="footer">
-            <p>© Cyrille de Chanteloup - Simulateur DNB 2026 - Tous droits réservés</p>
+            <p>© c dc - Simulateur DNB 2026 - Tous droits réservés</p>
         </div>
     </div>
 
@@ -574,6 +596,19 @@
             }
         }
 
+        // 1) FONCTION DE REMISE À ZÉRO TOTALE
+        function triggerReset() {
+            if (confirm("Voulez-vous vraiment remettre à zéro toutes les notes saisies ?")) {
+                const inputs = document.querySelectorAll('input');
+                inputs.forEach(input => { input.value = ""; });
+                historyStack = [];
+                highMentionUnlocked = [false, false, false, false, false];
+                playTone(180, 'sawtooth', 0.2);
+                saveState();
+                updateAll();
+            }
+        }
+
         const matieresObligatoires = [
             { id: 'francais', nom: 'Français', ico: '✍️' }, { id: 'maths', nom: 'Maths', ico: '📐' },
             { id: 'histoire-geo', nom: 'Hist-Géo', ico: '🗺️' }, { id: 'emc', nom: 'EMC', ico: '⚖️' },
@@ -595,7 +630,6 @@
             if (parseFloat(input.value) > 20) input.value = "20";
         }
 
-        // Nettoyage et conversion à la volée des virgules pour autoriser les décimaux de manière fluide
         function sanitizeDecimalInput(input) {
             let val = input.value.replace(',', '.');
             val = val.replace(/[^0-9.]/g, '');
@@ -777,7 +811,7 @@
             zone.innerHTML = '';
 
             if (rawCC === "" && ccScore === 0) {
-                zone.innerHTML = '<div style="font-size:0.8em; color:#64748b; text-align:center; padding:10px; font-weight: 600;">Entrez votre moyenne continue pour simuler.</div>';
+                zone.innerHTML = '<div style="font-size:0.85em; color:#64748b; text-align:center; padding:15px; font-weight: 600;">Entrez votre moyenne continue pour simuler.</div>';
                 return;
             }
 
